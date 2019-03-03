@@ -85,3 +85,8 @@ li > h4 {
   display: inline-block;
 }
 
+@media screen and (max-width: 767px) {
+  .navbar-collapse.collapse {
+     display: inline;
+   }
+}
