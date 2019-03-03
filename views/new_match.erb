@@ -1,0 +1,14 @@
+<%= erb :header %>
+
+<div class="container">
+  <h2>Enter New Match Info</h2>
+  <form action="/sfr" method="POST">
+    <label>Name</label>
+    <input type="text" name="name" />
+    <label>Team Number</label>
+    <input type="text" name="team_number" />
+    <label><input type="submit" class="btn btn-success btn-medium" value="Save Info"></label>
+  </form>
+</div>
+
+<%= erb :footer %>
