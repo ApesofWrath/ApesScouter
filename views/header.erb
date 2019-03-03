@@ -5,22 +5,22 @@
   <title>The Apes of Wrath</title>
 
   <!-- Favicons --> 
-  <link rel="apple-touch-icon" sizes="57x57" href="/img/favicon/apple-icon-57x57.png">
-  <link rel="apple-touch-icon" sizes="60x60" href="/img/favicon/apple-icon-60x60.png">
-  <link rel="apple-touch-icon" sizes="72x72" href="/img/favicon/apple-icon-72x72.png">
-  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon/apple-icon-76x76.png">
-  <link rel="apple-touch-icon" sizes="114x114" href="/img/favicon/apple-icon-114x114.png">
-  <link rel="apple-touch-icon" sizes="120x120" href="/img/favicon/apple-icon-120x120.png">
-  <link rel="apple-touch-icon" sizes="144x144" href="/img/favicon/apple-icon-144x144.png">
-  <link rel="apple-touch-icon" sizes="152x152" href="/img/favicon/apple-icon-152x152.png">
-  <link rel="apple-touch-icon" sizes="180x180" href="/img/favicon/apple-icon-180x180.png">
-  <link rel="icon" type="image/png" sizes="192x192" href="/img/favicon/android-icon-192x192.png">
-  <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon/favicon-32x32.png">
-  <link rel="icon" type="image/png" sizes="96x96" href="/img/favicon/favicon-96x96.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="/img/favicon/favicon-16x16.png">
-  <link rel="manifest" href="/img/favicon/manifest.json">
+  <link rel="apple-touch-icon" sizes="57x57" href="/public/img/favicon/apple-icon-57x57.png">
+  <link rel="apple-touch-icon" sizes="60x60" href="/public/img/favicon/apple-icon-60x60.png">
+  <link rel="apple-touch-icon" sizes="72x72" href="/public/img/favicon/apple-icon-72x72.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="/public/img/favicon/apple-icon-76x76.png">
+  <link rel="apple-touch-icon" sizes="114x114" href="/public/img/favicon/apple-icon-114x114.png">
+  <link rel="apple-touch-icon" sizes="120x120" href="/public/img/favicon/apple-icon-120x120.png">
+  <link rel="apple-touch-icon" sizes="144x144" href="/public/img/favicon/apple-icon-144x144.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="/public/img/favicon/apple-icon-152x152.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/public/img/favicon/apple-icon-180x180.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="/public/img/favicon/android-icon-192x192.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/public/img/favicon/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="96x96" href="/public/img/favicon/favicon-96x96.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/public/img/favicon/favicon-16x16.png">
+  <link rel="manifest" href="/public/img/favicon/manifest.json">
   <meta name="msapplication-TileColor" content="#ffffff">
-  <meta name="msapplication-TileImage" content="/img/favicon/ms-icon-144x144.png">
+  <meta name="msapplication-TileImage" content="/public/img/favicon/ms-icon-144x144.png">
   <meta name="theme-color" content="#ffffff">
 
   <!-- CSS and JS files -->
@@ -46,24 +46,19 @@
         <div class="nav-collapse collapse">
           <% #if @user %>
             <ul class="nav">
-              <li>
-                <a href="/projects"> <i class="icon-th-large icon-black"></i> Projects</a>
-              </li>
-              <li>
-                <a href="/dashboards"> <i class="icon-list-alt icon-black"></i> Dashboards</a>
-              </li>
-              <li>
-                <a href="/orders"> <i class="icon-shopping-cart icon-black"></i> Orders</a>
-              </li>
-              <li>
-                <a href="/planning"> <i class="icon-calendar icon-black"></i> Planning</a>
-              </li>
+              <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"> SFR<span class="caret"></span></a>
+                  <ul class="dropdown-menu">
+                    <li><a href="/sfr/new_match"> Add New Match</a></li>
+                    <li><a href="/sfr/find_team"> Find Team</a></li>
+                    <li><a href="/sfr/show_stats"> Show All Stats</a></li>
+                  </ul>
+                </li>
             </ul>
             <div class="pull-right">
               <ul class="nav pull-right">
                 <li class="dropdown">
-                  <a href="#" class="dropdown-toggle" data-toggle="dropdown"> <i class="icon-user"></i>
-                    <%= #@user.first_name %> <%= #@user.last_name %> <b class="caret"></b></a>
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"> <i class="icon-user"></i></a>
                   <ul class="dropdown-menu">
                     <li>
                       <a href="/logout"><i class="icon-off"></i> Logout</a>
@@ -72,7 +67,6 @@
                 </li>
               </ul>
             </div>
-          <% #end %>
         </div>
       </div>
     </div>
