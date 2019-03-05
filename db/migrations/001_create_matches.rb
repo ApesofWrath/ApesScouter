@@ -12,6 +12,8 @@ Sequel.migration do
             Integer :team_number, :null => false
             Integer :match_number, :null => false
             String :name, :null => false
+            String :preload, :null => false
+            Integer :hab_start, :null => false
             Integer :hab_cross, :null => false
             Integer :sand_hatches, :null => false
             Integer :sand_cargo, :null => false
@@ -23,13 +25,15 @@ Sequel.migration do
             Integer :high_cargo, :null => false
             Integer :cargoship_hatches, :null => false
             Integer :cargoship_cargo, :null => false
-            Integer :dropped_pieces, :null => false
+            Integer :dropped_hatches, :null => false
+            Integer :dropped_cargo, :null => false
             Integer :climb, :null => false
             Integer :hatch_ground_pickup, :null => false
             Integer :cargo_ground_pickup, :null => false
             Integer :hatch_human_intake, :null => false
             Integer :cargo_human_intake, :null => false
             Integer :driver_skill, :null => false
+            Integer :played_defense, :null => false
             Text :notes, :null => false, :default => ""
         end
     end
