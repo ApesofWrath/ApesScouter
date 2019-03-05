@@ -14,20 +14,53 @@ class ApesScouter < Sinatra::Base
         erb :index
     end
 
-    get '/sfr' do
-        erb :sfr
+    # Competitions
+    get '/competitions' do
+        erb :competitions
     end
 
-    get '/sfr/new_match' do
+    get '/competitions/new_comp' do
+        erb :new_competition
+    end
+
+    post '/competitions' do
+        # Check parameter existence and format.
+        halt(400, 'Missing competition name.') if params[:name].nil? || params[:name] == ''
+        halt(400, 'Missing year.') if params[:year].nil? || params[:year] == ''
+        competition = Competition.create(:name => params[:name], :year => params[:year])
+        redirect "/competitions/#{competition.id}"
+    end
+
+    # Check that it is a valid project id
+    before "/competitions/:id*" do
+        @competition = Competition[params[:id]]
+        halt(400, "Invalid competition (id).") if @competition.nil?
+    end
+
+    get "/competitions/:id" do
+        erb :competition
+    end
+
+    get '/competitions/:id/new_match' do
         erb :new_match
     end
 
-    post "/sfr" do
+    # Add new match data to database
+    post '/matches' do
         # Check parameter existence and format.
         halt(400, "Missing scouter name.") if params[:name].nil? || params[:name] == ""
         halt(400, "Missing team number.") if params[:team_number].nil? || params[:team_number] == ""
-        Match.create(:team_number => params[:team_number], :competition => "sfr", :match_number => 1, :name => params[:name], :hab_cross => 0, :sand_hatches => 0, :sand_cargo => 0, :low_hatches => 0, :mid_hatches => 0, :high_hatches => 0, :low_cargo => 0, :mid_cargo => 0, :high_cargo => 0, :cargoship_hatches => 0, :cargoship_cargo => 0, :dropped_pieces => 0, :climb => 0, :hatch_ground_pickup => 0, :cargo_ground_pickup => 0, :hatch_human_intake => 0, :cargo_human_intake => 0, :driver_skill => 0, :notes => "")
-        redirect "/sfr"
+        match = Match.create(:comp_id => params[:comp_id], :team_number => params[:team_number], :match_number => params[:match_number], 
+                             :name => params[:name], :hab_start => params[:hab_start], :hab_cross => params[:hab_cross], 
+                             :sand_hatches => params[:sand_hatches], :sand_cargo => params[:sand_cargo], :low_hatches => params[:low_hatches], 
+                             :mid_hatches => params[:mid_hatches], :high_hatches => params[:high_hatches], :low_cargo => params[:low_cargo], 
+                             :mid_cargo => params[:mid+cargo], :high_cargo => params[:high_cargo], :cargoship_hatches => params[:cargoship_hatches], 
+                             :cargoship_cargo => params[:cargoship_cargo], :dropped_hatches => params[:dropped_hatches], 
+                             :dropped_cargo => params[:dropped_cargo], :climb => params[:climb], :hatch_ground_pickup => params[:hatch_ground_pickup], 
+                             :cargo_ground_pickup => params[:cargo_ground_pickup], :hatch_human_intake => params[:hatch_human_intake], 
+                             :cargo_human_intake => params[:cargo_human_intake], :driver_skill => params[:driver_skill], 
+                             :played_defense => params[:played_defense], :notes => params[:notes])
+        redirect "/competitions/#{match.comp_id}"
     end
 end
 
