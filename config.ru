@@ -1,6 +1,12 @@
-#require File.absolute_path("app.rb")
+# Copyright 2019                    
+# The Apes of Wrath                 
+#                                   
+# @author Cody King                 
+# cking@apesofwrath668.org
+#
+# Rackup config file pointing to app
 
-#run ApesScouter
+require File.absolute_path("scouter_server.rb")
 
-require './app'
-run Sinatra::Application
+run ApesScouter
+
