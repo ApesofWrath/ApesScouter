@@ -1,8 +1,18 @@
+# Copyright 2012 Team 254. All Rights Reserved.
+# @author pat@patfairbank.com (Patrick Fairbank)
+#
+# Contains maintenance and deployment configuration.
+
+require "bundler/setup"
+require "pathological"
+require "sequel"
+
+Sequel.extension :migration
+
+# Task for executing any pending database schema changes.
 namespace :db do
-    desc "Run migrations"
-    task :migrate, [:version] do |t, args|
-        require "sequel/core"
-        Sequel.extension :migration
-        version = args[:version].to_i if args[:version]
-    end
+  task :migrate do
+    require_relative "db"
+    Sequel::Migrator.run(DB, "db/migrations")
+  end
 end

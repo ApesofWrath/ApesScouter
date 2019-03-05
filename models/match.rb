@@ -4,6 +4,6 @@
 # @author Cody King
 # cking@apesofwrath668.org
 
-class User < Sequel::Model
-
+class Match < Sequel::Model(:matches)
+      
 end

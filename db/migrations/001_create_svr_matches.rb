@@ -6,8 +6,9 @@
 
 Sequel.migration do
     change do
-        create_table(:svr) do
+        create_table(:matches) do
             primary_key :id
+            String :competition, :null => false
             Integer :team_number, :null => false
             Integer :match_number, :null => false
             String :name, :null => false
@@ -29,7 +30,7 @@ Sequel.migration do
             Integer :hatch_human_intake, :null => false
             Integer :cargo_human_intake, :null => false
             Integer :driver_skill, :null => false
-            Text :name, :null => false, :default => ""
+            Text :notes, :null => false, :default => ""
         end
     end
 end
