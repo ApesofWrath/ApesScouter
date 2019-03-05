@@ -19,14 +19,12 @@ class ApesScouter < Sinatra::Base
         erb :competitions
     end
 
-    get '/competitions/new_comp' do
+    get '/new_comp' do
         erb :new_competition
     end
 
     post '/competitions' do
         # Check parameter existence and format.
-        halt(400, 'Missing competition name.') if params[:name].nil? || params[:name] == ''
-        halt(400, 'Missing year.') if params[:year].nil? || params[:year] == ''
         competition = Competition.create(:name => params[:name], :year => params[:year])
         redirect "/competitions/#{competition.id}"
     end
@@ -48,13 +46,11 @@ class ApesScouter < Sinatra::Base
     # Add new match data to database
     post '/matches' do
         # Check parameter existence and format.
-        halt(400, "Missing scouter name.") if params[:name].nil? || params[:name] == ""
-        halt(400, "Missing team number.") if params[:team_number].nil? || params[:team_number] == ""
         match = Match.create(:comp_id => params[:comp_id], :team_number => params[:team_number], :match_number => params[:match_number], 
                              :name => params[:name], :hab_start => params[:hab_start], :hab_cross => params[:hab_cross], 
                              :sand_hatches => params[:sand_hatches], :sand_cargo => params[:sand_cargo], :low_hatches => params[:low_hatches], 
                              :mid_hatches => params[:mid_hatches], :high_hatches => params[:high_hatches], :low_cargo => params[:low_cargo], 
-                             :mid_cargo => params[:mid+cargo], :high_cargo => params[:high_cargo], :cargoship_hatches => params[:cargoship_hatches], 
+                             :mid_cargo => params[:mid_cargo], :high_cargo => params[:high_cargo], :cargoship_hatches => params[:cargoship_hatches], 
                              :cargoship_cargo => params[:cargoship_cargo], :dropped_hatches => params[:dropped_hatches], 
                              :dropped_cargo => params[:dropped_cargo], :climb => params[:climb], :hatch_ground_pickup => params[:hatch_ground_pickup], 
                              :cargo_ground_pickup => params[:cargo_ground_pickup], :hatch_human_intake => params[:hatch_human_intake], 
