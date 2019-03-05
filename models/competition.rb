@@ -4,6 +4,6 @@
 # @author Cody King
 # cking@apesofwrath668.org
 
-class Match < Sequel::Model(:matches)
-    many_to_one :competitions      
+class Competition < Sequel::Model(:competitions)
+    one_to_many :matches      
 end

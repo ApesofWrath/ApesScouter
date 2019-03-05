@@ -3,7 +3,8 @@
 #
 # Sets up database connection and includes all the models for convenience.
 
-require "sequel"
+require 'sequel'
 
-require "./db.rb"
-require "./models/match.rb"
+require './db.rb'
+require './models/match.rb'
+require './models/competition.rb'
