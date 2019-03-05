@@ -1,0 +1,12 @@
+<%= erb :header %>
+
+<div class="container">
+    <div class="pull-right" style="margin-top: 15px;">
+        <a href="/competitions/<%= @competition.id %>/new_match" class="btn btn-success btn-small">
+            <i class="icon-white icon-plus-sign"></i> New Match
+        </a>
+    </div>
+    <h3><b><%= @competition.name %></b></h3>
+</div>
+
+<%= erb :footer %>
