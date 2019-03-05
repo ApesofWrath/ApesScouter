@@ -8,7 +8,7 @@ Sequel.migration do
     change do
         create_table(:matches) do
             primary_key :id
-            String :competition, :null => false
+            Integer :comp_id, :null => false
             Integer :team_number, :null => false
             Integer :match_number, :null => false
             String :name, :null => false
