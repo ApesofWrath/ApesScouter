@@ -2,13 +2,57 @@
 
 <div class="container">
   <h2>Enter New Match Info</h2>
-  <form action="/sfr" method="POST">
+  <form action="/matches" method="POST">
     <label>Name</label>
-    <input type="text" name="name" />
+    <input type="text" name="name" required />
+
     <label>Team Number</label>
-    <input type="text" name="team_number" />
+    <input type="text" name="team_number" required />
+
+    <label>Match Number</label>
+    <input type="number" min=1 max=99 name="match_number" required />
+
+    <label>Pre Load</label>
+    <select name="preload" required>
+        <option value="" selected disabled hidden>Select pre-loaded item</option>
+        <option value="nothing">Nothing</option>
+        <option value="hatch">Hatch</option>
+        <option value="cargo">Cargo</option>
+    </select>
+
+    <h3>Sandstorm</h3>
+    <label>Hab Cross</label>
+    <select name="hab_cross" required>
+        <option value="" selected disabled hidden>Select Option</option>
+        <option value="yes">Yes</option>
+        <option value="no">No</option>
+    </select>
+
+    <label>Hab Start</label>
+    <select name="hab_start" required>
+        <option value="" selected disabled hidden>Select Option</option>
+        <option value="1">Level 1</option>
+        <option value="2">Level 2</option>
+    </select>
+
+    <br>
+    <button type=button class="btn btn-info btn-large" onClick="onClick()">Cargo:&nbsp;<p id="s_cargo">0</p></button>
+
+
+
+    <br><br>
+    <input type=hidden name="comp_id" value="<%= @competition.id %>">
+
     <label><input type="submit" class="btn btn-success btn-medium" value="Save Info"></label>
   </form>
 </div>
+
+<script type="text/javascript">
+    var s_cargo = 0;
+    function onClick() {
+        s_cargo += 1;
+        document.getElementById("s_cargo").innerHTML = s_cargo;
+    };
+</script>
 
 <%= erb :footer %>
