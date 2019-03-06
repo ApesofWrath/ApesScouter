@@ -38,51 +38,80 @@
     </select>
 
     <br>
+    
     <!-- Sandstorm Hatches and Cargo -->
-    <button type=button class="btn btn-info btn-large" onClick="addOne(0)">Hatches:&nbsp;<p id="s_hatches">0</p></button>
-    <input type=hidden name="sand_hatches" value="0" id="sand_hatches">
-    <button type=button class="btn btn-warning btn-large" onClick="addOne(1)">Cargo:&nbsp;<p id="s_cargo">0</p></button>
-    <input type=hidden name="sand_cargo" value="0" id="sand_cargo">
+    <label>Scored Pieces</label>
+    <table class="table table-condensed table-bordered" style="width: auto;">
+        <tr>
+            <td><button type=button class="btn btn-info btn-large" onClick="addOne('sand_hatches')">Hatches:</button></td>
+            <td><input type="text" readonly="readonly" style="width:5em" name="sand_hatches"  id="sand_hatches"></td>
+        </tr>
+        <tr>
+            <td><button type=button class="btn btn-warning btn-large" onClick="addOne('sand_cargo')">Cargo:</button></td>
+            <td><input type="text" readonly="readonly" style="width:5em" name="sand_cargo" id="sand_cargo"></td>
+        </tr>
+    </table>
 
-    <br>
     <br>
 
     <h3>Tele Op</h3>
     <label>Rocket Ship</label>
-    <table class="table table-striped table-condensed table-bordered" style="width: auto;">
+    <table class="table table-condensed table-bordered" style="width: auto;">
         <tr>
             <td></td>
-            <td><b>Low</b></td>
-            <td><b>Mid</b></td>
-            <td><b>High</b></td>
-        </tr>
-        <tr>
             <td><b>Hatches</b></td>
-            <td><button type=button class="btn btn-info btn-large" onClick="addOne(0)">Hatches:&nbsp;<p id="low_hatches">0</p></button></td>
-            <td><button type=button class="btn btn-info btn-large" onClick="addOne(0)">Hatches:&nbsp;<p id="mid_hatches">0</p></button></td>
-            <td><button type=button class="btn btn-info btn-large" onClick="addOne(0)">Hatches:&nbsp;<p id="high_hatches">0</p></button></td>
+            <td><b>Value</b></td>
+            <td><b>Cargo</b></td>
+            <td><b>Value</b></td>
         </tr>
         <tr>
-            <td><b>Cargo</b></td>
-            <td><button type=button class="btn btn-warning btn-large" onClick="addOne(0)">Cargo:&nbsp;<p id="low_cargo">0</p></button></td>
-            <td><button type=button class="btn btn-warning btn-large" onClick="addOne(0)">Cargo:&nbsp;<p id="mid_cargo">0</p></button></td>
-            <td><button type=button class="btn btn-warning btn-large" onClick="addOne(0)">Cargo:&nbsp;<p id="high_cargo">0</p></button></td>
+            <td><b>Low</b></td>
+            <td><button type=button class="btn btn-info btn-large" onClick="addOne('low_hatches')">Hatches:</button></td>
+            <td><input type="text" readonly="readonly" style="width:5em" name="low_hatches" id="low_hatches"></td>
+            <td><button type=button class="btn btn-warning btn-large" onClick="addOne('low_cargo')">Cargo:</button></td>
+            <td><input type="text" readonly="readonly" style="width:5em" name="low_cargo" id="low_cargo"></td>
+        </tr>
+        <tr>
+            <td><b>Mid</b></td>
+            <td><button type=button class="btn btn-info btn-large" onClick="addOne('mid_hatches')">Hatches:</button></td>
+            <td><input type="text" readonly="readonly" style="width:5em" name="mid_hatches" id="mid_hatches"></td>
+            <td><button type=button class="btn btn-warning btn-large" onClick="addOne('mid_cargo')">Cargo:</button></td>
+            <td><input type="text" readonly="readonly" style="width:5em" name="mid_cargo" id="mid_cargo"></td>
+        </tr>
+        <tr>
+            <td><b>High</b></td>
+            <td><button type=button class="btn btn-info btn-large" onClick="addOne('high_hatches')">Hatches:</button></td>
+            <td><input type="text" readonly="readonly" style="width:5em" name="high_hatches" id="high_hatches"></td>
+            <td><button type=button class="btn btn-warning btn-large" onClick="addOne('high_cargo')">Cargo:</button></td>
+            <td><input type="text" readonly="readonly" style="width:5em" name="high_cargo" id="high_cargo"></td>
         </tr>
     </table>
 
     <label>Cargo Ship</label>
-    <button type=button class="btn btn-info btn-large" onClick="addOne(0)">Hatches:&nbsp;<p id="c_hatches">0</p></button>
-    <input type=hidden name="cargoship_hatches" value="0" id="cargoship_hatches">
-    <button type=button class="btn btn-warning btn-large" onClick="addOne(1)">Cargo:&nbsp;<p id="c_cargo">0</p></button>
-    <input type=hidden name="cargoship_cargo" value="0" id="cargoship_cargo">
-
-    <br>
+    <table class="table table-condensed table-bordered" style="width: auto;">
+        <tr>
+            <td><button type=button class="btn btn-info btn-large" onClick="addOne('cargoship_hatches')">Hatches:</button></td>
+            <td><input type=text readonly="readonly" style="width:5em" name="cargoship_hatches" id="cargoship_hatches"></td>
+        </tr>
+        <tr>
+            <td><button type=button class="btn btn-warning btn-large" onClick="addOne('cargoship_cargo')">Cargo:</button></td>
+            <td><input type=text readonly="readonly" style="width:5em" name="cargoship_cargo" id="cargoship_cargo"></td>
+        </tr>
+    </table>
 
     <label>Dropped Pieces</label>
-    <button type=button class="btn btn-info btn-large" onClick="addOne(0)">Hatches:&nbsp;<p id="d_hatches">0</p></button>
-    <input type=hidden name="dropped_hatches" value="0" id="dropped_hatches">
-    <button type=button class="btn btn-warning btn-large" onClick="addOne(1)">Cargo:&nbsp;<p id="d_cargo">0</p></button>
-    <input type=hidden name="dropped_cargo" value="0" id="dropped_cargo">
+    <table class="table table-condensed table-bordered" style="width: auto;">
+        <tr>
+            <td><button type=button class="btn btn-info btn-large" onClick="addOne('dropped_hatches')">Hatches:</button></td>
+            <td><input type=text readonly="readonly" style="width:5em" name="dropped_hatches" id="dropped_hatches"></td>
+        </tr>
+        <tr>
+            <td><button type=button class="btn btn-warning btn-large" onClick="addOne('dropped_cargo')">Cargo:</button></td>
+            <td><input type=text readonly="readonly" style="width:5em" name="dropped_cargo" id="dropped_cargo"></td>
+        </tr>
+    </table>
+
+    <br>
 
     <h3>Endgame</h3>
     <label>Climb</label>
@@ -101,6 +130,8 @@
         <option value="lose">Lose</option>
         <option value="tie">Tie</option>
     </select>
+
+    <br>
 
     <h3>Miscellaneous</h3>
     <label>Has Ramps for Buddy Climb</label>
@@ -166,23 +197,33 @@
         <option value="no">No</option>
     </select>   
 
-    
-
     <br><br>
     <input type=hidden name="comp_id" value="<%= @competition.id %>">
 
-    <label><input type="submit" class="btn btn-success btn-medium" value="Save Info"></label>
+    <label><input type="submit" class="btn btn-success btn-large" value="Save Info"></label>
   </form>
 </div>
 
+<!-- JS script for keeping track of button presses -->
 <script type="text/javascript">
-    var sandstorm = [0, 0];
-    function addOne(i) {
-        sandstorm[i]++;
-        document.getElementById("s_hatches").innerHTML = sandstorm[0];
-        document.getElementById("sand_hatches").value = sandstorm[0];
-        document.getElementById("s_cargo").innerHTML = sandstorm[1];
-        document.getElementById("sand_cargo").value = sandstorm[1];
+    var data = {
+        "sand_hatches": 0,
+        "sand_cargo": 0,
+        "low_hatches": 0,
+        "mid_hatches": 0,
+        "high_hatches": 0,
+        "low_cargo": 0,
+        "mid_cargo": 0,
+        "high_cargo": 0,
+        "cargoship_hatches": 0,
+        "cargoship_cargo": 0,
+        "dropped_hatches": 0,
+        "dropped_cargo": 0
+    };
+    
+    function addOne(id) {
+        data[id]++;
+        document.getElementById(id).value = data[id];
     };
 </script>
 
