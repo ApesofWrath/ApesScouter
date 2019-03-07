@@ -4,7 +4,6 @@
 # Contains maintenance and deployment configuration.
 
 require "bundler/setup"
-require "pathological"
 require "sequel"
 
 Sequel.extension :migration
