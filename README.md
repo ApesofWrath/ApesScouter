@@ -23,7 +23,7 @@ To run the server locally:
 1. Create an empty MySQL database and a user account with full permissions on it.
 1. Populate `config.json` with the parameters for the development and production environments. Set
 `enable_wordpress_auth` to false and `members_url`, `base_address`, `gmail_user`, and `gmail_password` to blank; they are used for mechanisms specific to Team 254.
-1. Run `bundle install`. This will download and install the gems that Cheesy Parts depends on.
+1. Run `bundle install`. This will download and install the gems that Apes Scouter depends on.
 1. Run `bundle exec rake db:migrate`. This will run the database migrations to create the necessary tables in
 MySQL. **Please make sure your database has been created and that it is empty with no tables in it. Otherwise this command will fail**.
 1. Run `ruby scouter_server.rb` to control the running of the server.
