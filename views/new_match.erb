@@ -44,11 +44,11 @@
     <table class="table table-condensed table-bordered" style="width: auto;">
         <tr>
             <td><button type=button class="btn btn-info btn-large" onClick="addOne('sand_hatches')">Hatches:</button></td>
-            <td><input type="text" readonly="readonly" style="width:5em" name="sand_hatches"  id="sand_hatches"></td>
+            <td><input type="text" value="0" readonly="readonly" style="width:5em" name="sand_hatches" id="sand_hatches"></td>
         </tr>
         <tr>
             <td><button type=button class="btn btn-warning btn-large" onClick="addOne('sand_cargo')">Cargo:</button></td>
-            <td><input type="text" readonly="readonly" style="width:5em" name="sand_cargo" id="sand_cargo"></td>
+            <td><input type="text" value="0" readonly="readonly" style="width:5em" name="sand_cargo" id="sand_cargo"></td>
         </tr>
     </table>
 
@@ -67,23 +67,23 @@
         <tr>
             <td><b>Low</b></td>
             <td><button type=button class="btn btn-info btn-large" onClick="addOne('low_hatches')">Hatches:</button></td>
-            <td><input type="text" readonly="readonly" style="width:5em" name="low_hatches" id="low_hatches"></td>
+            <td><input type="text" value="0" readonly="readonly" style="width:5em" name="low_hatches" id="low_hatches"></td>
             <td><button type=button class="btn btn-warning btn-large" onClick="addOne('low_cargo')">Cargo:</button></td>
-            <td><input type="text" readonly="readonly" style="width:5em" name="low_cargo" id="low_cargo"></td>
+            <td><input type="text" value="0" readonly="readonly" style="width:5em" name="low_cargo" id="low_cargo"></td>
         </tr>
         <tr>
             <td><b>Mid</b></td>
             <td><button type=button class="btn btn-info btn-large" onClick="addOne('mid_hatches')">Hatches:</button></td>
-            <td><input type="text" readonly="readonly" style="width:5em" name="mid_hatches" id="mid_hatches"></td>
+            <td><input type="text" value="0" readonly="readonly" style="width:5em" name="mid_hatches" id="mid_hatches"></td>
             <td><button type=button class="btn btn-warning btn-large" onClick="addOne('mid_cargo')">Cargo:</button></td>
-            <td><input type="text" readonly="readonly" style="width:5em" name="mid_cargo" id="mid_cargo"></td>
+            <td><input type="text" value="0" readonly="readonly" style="width:5em" name="mid_cargo" id="mid_cargo"></td>
         </tr>
         <tr>
             <td><b>High</b></td>
             <td><button type=button class="btn btn-info btn-large" onClick="addOne('high_hatches')">Hatches:</button></td>
-            <td><input type="text" readonly="readonly" style="width:5em" name="high_hatches" id="high_hatches"></td>
+            <td><input type="text" value="0" readonly="readonly" style="width:5em" name="high_hatches" id="high_hatches"></td>
             <td><button type=button class="btn btn-warning btn-large" onClick="addOne('high_cargo')">Cargo:</button></td>
-            <td><input type="text" readonly="readonly" style="width:5em" name="high_cargo" id="high_cargo"></td>
+            <td><input type="text" value="0" readonly="readonly" style="width:5em" name="high_cargo" id="high_cargo"></td>
         </tr>
     </table>
 
@@ -91,11 +91,11 @@
     <table class="table table-condensed table-bordered" style="width: auto;">
         <tr>
             <td><button type=button class="btn btn-info btn-large" onClick="addOne('cargoship_hatches')">Hatches:</button></td>
-            <td><input type=text readonly="readonly" style="width:5em" name="cargoship_hatches" id="cargoship_hatches"></td>
+            <td><input type=text value="0" readonly="readonly" style="width:5em" name="cargoship_hatches" id="cargoship_hatches"></td>
         </tr>
         <tr>
             <td><button type=button class="btn btn-warning btn-large" onClick="addOne('cargoship_cargo')">Cargo:</button></td>
-            <td><input type=text readonly="readonly" style="width:5em" name="cargoship_cargo" id="cargoship_cargo"></td>
+            <td><input type=text value="0" readonly="readonly" style="width:5em" name="cargoship_cargo" id="cargoship_cargo"></td>
         </tr>
     </table>
 
@@ -103,11 +103,11 @@
     <table class="table table-condensed table-bordered" style="width: auto;">
         <tr>
             <td><button type=button class="btn btn-info btn-large" onClick="addOne('dropped_hatches')">Hatches:</button></td>
-            <td><input type=text readonly="readonly" style="width:5em" name="dropped_hatches" id="dropped_hatches"></td>
+            <td><input type=text value="0" readonly="readonly" style="width:5em" name="dropped_hatches" id="dropped_hatches"></td>
         </tr>
         <tr>
             <td><button type=button class="btn btn-warning btn-large" onClick="addOne('dropped_cargo')">Cargo:</button></td>
-            <td><input type=text readonly="readonly" style="width:5em" name="dropped_cargo" id="dropped_cargo"></td>
+            <td><input type=text value="0" readonly="readonly" style="width:5em" name="dropped_cargo" id="dropped_cargo"></td>
         </tr>
     </table>
 
@@ -195,7 +195,10 @@
         <option value="" selected disabled hidden>Select Option</option>
         <option value="yes">Yes</option>
         <option value="no">No</option>
-    </select>   
+    </select>
+
+    <label>Notes</label>
+    <textarea name="notes" rows="4"></textarea>
 
     <br><br>
     <input type=hidden name="comp_id" value="<%= @competition.id %>">
