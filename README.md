@@ -1,6 +1,6 @@
 # Apes Scouter 
 
-Apes Scouter is the system used by FRC Team 668, *The Apes of Wrath* for scouting at competition. It is used
+Apes Scouter is the system used by FRC Team 668, [*The Apes of Wrath*](http://apesofwrath668.org/) for scouting at competition. It is used
 as a local "offline" webserver running on a [Raspberry Pi](https://www.raspberrypi.org/), but could be used online as a web app as well.
 
 Apes Scouter is written in Ruby using the [Sinatra](http://sinatrarb.com) framework and uses MySQL as the
