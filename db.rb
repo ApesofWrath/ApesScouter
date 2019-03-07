@@ -1,9 +1,9 @@
-# Copyright 2013 Team 254. All Rights Reserved.
-# @author pat@patfairbank.com (Patrick Fairbank)
+# Copyright 2019
+# The Apes of Wrath
 #
-# Sets up database connection.
+# @author Cody King
+# cking@apesofwrath668.org
+#
+# Connection for database
 
-require "cheesy-common"
-
-DB = Sequel.mysql2({ :host => CheesyCommon::Config.db_host, :user => CheesyCommon::Config.db_user,
-	:password => CheesyCommon::Config.db_password, :database => CheesyCommon::Config.db_database })
+DB = Sequel.mysql2({ :host => 'localhost', :user => 'pi', :password => ENV.fetch('DB_PASS'), :database => 'scouting_data' })
