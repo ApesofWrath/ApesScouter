@@ -36,6 +36,13 @@ class ApesScouter < Sinatra::Base
     end
 
     get "/competitions/:id" do
+        # Sorting (need to complete for all columns
+        if ["team_number", "driver_skill"].include?(params[:sort])
+            @match_sort = params[:sort].to_sym
+        else
+            @match_sort = :id
+        end
+        
         erb :competition
     end
 

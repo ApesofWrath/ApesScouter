@@ -1,0 +1,22 @@
+<table class="table table-striped table-condensed table-bordered">
+    <tr>
+        <% DB.fetch("SHOW COLUMNS FROM matches;").each do |col| %>
+            <th><a href="?sort=<%= col[:Field] %>"><%= col[:Field] %></a></th>
+        <% end %>
+    </tr>
+    
+    <% matches.each do |match| %>
+        <tr>
+            <% DB.fetch("SHOW COLUMNS FROM matches;") do |col| %>
+                <% DB.fetch("SELECT ? FROM matches WHERE id=?;", col[:Field], match.id) do |val| %>
+                    <% val.each do |data| %>
+                        <% DB.fetch("SELECT ? FROM matches WHERE id=?;", data.first, match.id) do |v| %>
+                            <td><%= v[data.first] %></td>
+                        <% end %>
+                    <% end %>
+                <% end %>
+            <% end %>
+        </tr>
+    <% end %>
+</table>
+

@@ -6,7 +6,9 @@
             <i class="icon-white icon-plus-sign"></i> New Match
         </a>
     </div>
-    <h3><b><%= @competition.name %></b></h3>
+    <h3><b><%= @competition.name %> <%= @competition.year %> - All Match Data</b></h3>
+    <%= erb :data_list, :locals => { :matches => Match.where(:comp_id => @competition.id).order(@match_sort) } %>
 </div>
+<br>
 
 <%= erb :footer %>
