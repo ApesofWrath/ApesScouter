@@ -1,0 +1,14 @@
+<%= erb :header %>
+
+<div class="container">
+    <h3><b><%= @competition.name %> <%= @competition.year %> - Stats</b></h3>
+
+    <% top_sand_hatches = [] %>
+    <% Match.where(:comp_id => @competition.id).each do |match| %>
+        <% if match.team_number.to_i == 668 %>
+            <p><%= match.low_hatches %></p>
+        <% end %>
+    <% end %>
+</div>
+
+<%= erb :footer %>
