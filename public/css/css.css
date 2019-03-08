@@ -105,7 +105,10 @@ html {
     z-index: 1;
     margin: auto;
     overflow: scroll;
-    height: 500px;
+}
+::-webkit-scrollbar {
+    width: 0px;  /* remove scrollbar space */
+    background: transparent;  /* transparent scrollbar */ 
 }
 .table-scroll table {
     width: 100%;
@@ -123,7 +126,6 @@ html {
     vertical-align: top;
 }
 .table-scroll thead th {
-    background: #f9f9f9;
     position: -webkit-sticky;
     position: sticky;
     top: 0;
@@ -137,4 +139,7 @@ th:first-child {
 }
 thead th:first-child {
     z-index: 5;
+}
+thead th {
+    background: #f9f9f9;
 }

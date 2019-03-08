@@ -1,38 +1,40 @@
-<div id="table-scroll" class="table-scroll">
-<table class="table table-condensed table-bordered">
-    <thead>
-        <tr>
-            <% col_index = 0 %>
-            <% DB.fetch("SHOW COLUMNS FROM matches;").each do |col| %>
-                <% if col_index >= 2 %>
-                    <th scope="col"><a href="?sort=<%= col[:Field] %>"><%= col[:Field] %></a></th>
-                <% else %>
-                    <% col_index = col_index + 1 %>
-                <% end %>
-            <% end %>
-        </tr>
-        </thead>
-    <tbody>
-        <% matches.each do |match| %>
-            <% col_index = 0 %>
+<div class="container">
+    <div id="table-scroll" class="table-scroll">
+    <table class="table table-condensed table-bordered">
+        <thead>
             <tr>
-                <% DB.fetch("SHOW COLUMNS FROM matches;") do |col| %>
-                    <% DB.fetch("SELECT ? FROM matches WHERE id=?;", col[:Field], match.id) do |val| %>
-                        <% val.each do |data| %>
-                            <% DB.fetch("SELECT ? FROM matches WHERE id=?;", data.first, match.id) do |v| %>
-                                <% if col_index == 2 %>
-                                    <th><%= v[data.first] %></td>
-                                <% elsif col_index > 2 %>
-                                    <td><%= v[data.first] %></td>
-                                <% end %>
-                                <% col_index = col_index + 1 %>
-                            <% end %>
-                        <% end %>
+                <% col_index = 0 %>
+                <% DB.fetch("SHOW COLUMNS FROM matches;").each do |col| %>
+                    <% if col_index >= 2 %>
+                        <th scope="col"><a href="?sort=<%= col[:Field] %>"><%= col[:Field].to_s.gsub('_', '&nbsp;') %></a></th>
+                    <% else %>
+                        <% col_index = col_index + 1 %>
                     <% end %>
                 <% end %>
             </tr>
-            <% col_index = 0 %>
-        <% end %>
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+            <% matches.each do |match| %>
+                <% col_index = 0 %>
+                <tr>
+                    <% DB.fetch("SHOW COLUMNS FROM matches;") do |col| %>
+                        <% DB.fetch("SELECT ? FROM matches WHERE id=?;", col[:Field], match.id) do |val| %>
+                            <% val.each do |data| %>
+                                <% DB.fetch("SELECT ? FROM matches WHERE id=?;", data.first, match.id) do |v| %>
+                                    <% if col_index == 2 %>
+                                        <th><%= v[data.first].to_s.gsub(' ', '&nbsp;') %></td>
+                                    <% elsif col_index > 2 %>
+                                        <td><%= v[data.first].to_s.gsub(' ', '&nbsp;') %></td>
+                                    <% end %>
+                                    <% col_index = col_index + 1 %>
+                                <% end %>
+                            <% end %>
+                        <% end %>
+                    <% end %>
+                </tr>
+                <% col_index = 0 %>
+            <% end %>
+        </tbody>
+    </table>
+    </div>
 </div>
