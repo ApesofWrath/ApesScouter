@@ -131,6 +131,20 @@
         <option value="tie">Tie</option>
     </select>
 
+    <label>Score</label>
+    <input type="number" min=0 max=999 style="width:5em" name="own_score" placeholder="Own" required />
+    <input type="number" min=0 max=999 style="width:5em" name="opp_score" placeholder="Opp" required />
+
+    <label>Ranking Points</label>
+    <select name="ranking_points" required>
+        <option value="" selected disabled hidden>Select Option</option>
+        <option value="0">0</option>
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+    </select>
+
     <br>
 
     <h3>Miscellaneous</h3>
@@ -149,12 +163,19 @@
         <option value="no">No</option>
     </select>   
 
+    <label>Has a Camera</label>
+    <select name="camera" required>
+        <option value="" selected disabled hidden>Select Option</option>
+        <option value="yes">Yes</option>
+        <option value="no">No</option>
+        <option value="unsure">Unsure</option>
+    </select>   
+
     <label>Hatch Ground Pickup</label>
     <select name="hatch_ground_pickup" required>
         <option value="" selected disabled hidden>Select Option</option>
         <option value="yes">Yes</option>
         <option value="no">No</option>
-        <option value="unsure">Unsure</option>
     </select>
 
     <label>Cargo Ground Pickup</label>
@@ -162,7 +183,6 @@
         <option value="" selected disabled hidden>Select Option</option>
         <option value="yes">Yes</option>
         <option value="no">No</option>
-        <option value="unsure">Unsure</option>
     </select>   
 
     <label>Hatch Human Intake</label>
@@ -184,10 +204,10 @@
     <label>Driver Skill</label>
     <select name="driver_skill" required>
         <option value="" selected disabled hidden>Select Option</option>
-        <option value="4">Amazing</option>
-        <option value="3">Good</option>
-        <option value="2">Fair</option>
-        <option value="1">Poor</option>
+        <option value="Amazing">Amazing</option>
+        <option value="Good">Good</option>
+        <option value="Fair">Fair</option>
+        <option value="Poor">Poor</option>
     </select>   
 
     <label>Played Defense</label>
@@ -209,6 +229,10 @@
 
 <!-- JS script for keeping track of button presses -->
 <script type="text/javascript">
+    window.onload = function() {
+          reloadValues();
+    };
+
     var data = {
         "sand_hatches": 0,
         "sand_cargo": 0,
@@ -227,6 +251,15 @@
     function addOne(id) {
         data[id]++;
         document.getElementById(id).value = data[id];
+    };
+
+    function reloadValues() {
+        for (var key in data) {
+            if (data.hasOwnProperty(key)) {
+                data[key] = document.getElementById(key).value;
+            }
+        }
+        console.log(data["sand_hatches"]);
     };
 </script>
 

@@ -19,10 +19,12 @@ class ApesScouter < Sinatra::Base
         erb :competitions
     end
 
+    # Create new competition
     get '/new_comp' do
         erb :new_competition
     end
 
+    # List of competitions to choose from
     post '/competitions' do
         # Check parameter existence and format.
         competition = Competition.create(:name => params[:name], :year => params[:year])
@@ -31,21 +33,37 @@ class ApesScouter < Sinatra::Base
 
     # Check that it is a valid project id
     before "/competitions/:id*" do
+        if params[:id].to_s == "goto_err"
+            halt(400, "Please select a place to go to.")
+        end
+        
         @competition = Competition[params[:id]]
         halt(400, "Invalid competition (id).") if @competition.nil?
     end
 
+    # Competition page with match entries
     get "/competitions/:id" do
-        # Sorting (need to complete for all columns
-        if ["team_number", "driver_skill"].include?(params[:sort])
+        # Sorting 
+        cols = [] 
+        DB.fetch("SHOW COLUMNS FROM matches;").each do |col|
+            cols.push(col[:Field])
+        end
+        if cols.include?(params[:sort])
             @match_sort = params[:sort].to_sym
         else
-            @match_sort = :id
+            @match_sort = :team_number
         end
         
         erb :competition
     end
 
+    # Competition Stats
+    get "/competitions/:id/stats" do
+        @competition = Competition[params[:id]]
+        erb :stats
+    end
+    
+    # Add new match entry
     get '/competitions/:id/new_match' do
         erb :new_match
     end
@@ -65,8 +83,9 @@ class ApesScouter < Sinatra::Base
                              :low_cargo => params[:low_cargo], :mid_cargo => params[:mid_cargo], :high_cargo => params[:high_cargo], 
                              :cargoship_hatches => params[:cargoship_hatches], :cargoship_cargo => params[:cargoship_cargo], 
                              :dropped_hatches => params[:dropped_hatches], :dropped_cargo => params[:dropped_cargo], :climb => params[:climb],
-                             :result => params[:result], :buddy_climb => params[:buddy_climb], :ramp_bot => params[:ramp_bot], 
-                             :hatch_ground_pickup => params[:hatch_ground_pickup], :cargo_ground_pickup => params[:cargo_ground_pickup], 
+                             :result => params[:result], :own_score => params[:own_score], :opp_score => params[:opp_score], 
+                             :ranking_points => params[:ranking_points],:buddy_climb => params[:buddy_climb], :ramp_bot => params[:ramp_bot], 
+                             :camera => params[:camera],:hatch_ground_pickup => params[:hatch_ground_pickup], :cargo_ground_pickup => params[:cargo_ground_pickup], 
                              :hatch_human_intake => params[:hatch_human_intake], :cargo_human_intake => params[:cargo_human_intake], 
                              :driver_skill => params[:driver_skill], :played_defense => params[:played_defense], :notes => params[:notes])
         
