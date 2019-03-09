@@ -143,3 +143,8 @@ thead th:first-child {
 thead th {
     background: #f9f9f9;
 }
+
+/* vertically align button and select elements */
+select, button{
+    vertical-align:top;
+}
