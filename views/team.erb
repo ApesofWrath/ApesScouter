@@ -1,7 +1,7 @@
 <%= erb :header %>
 
 <div class="container">
-    <h3><b>Team <%= @team.number %> Stats (<%= @competition.name %> - <%= @competition.year %>)</b></h3>
+    <h3><b>Team <%= @team.number %> Stats (<a href="/competitions/<%= @competition.id %>"><%= @competition.name %> - <%= @competition.year %></a>)</b></h3>
 
     <% if @match_sort.to_s == "match_number" %>
         <%= erb :data_list, :locals => { :matches => Match.where([[:comp_id, @competition.id], [:team_number, @team.number]]).order(Sequel.asc(@match_sort)) } %>

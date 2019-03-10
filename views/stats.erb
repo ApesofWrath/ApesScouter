@@ -1,38 +1,36 @@
 <%= erb :header %>
 
 <div class="container">
-    <h3><b><%= @competition.name %> <%= @competition.year %> - Stats</b></h3>
+    <h3><b><a href="/competitions/<%= @competition.id %>"><%= @competition.name %> <%= @competition.year %></a> - Stats</b></h3>
 
     <hr>
 
-    <% num_matches = DB.fetch("SELECT COUNT(*) FROM matches WHERE comp_id = ?;", @competition.id).all[0][:"COUNT(*)"] %>
-    <% if num_matches == 0 %>
+    <% if Match.where(:comp_id => @competition.id).count == 0 %>
         <p>No match data found for <%= @competition.name %>.</p>
     <% else %>
 
-        <!-- Get categories except id and comp_id -->
+        <!-- Get categories for leaderboards -->
         <% included_cats = ["sand_hatches", "sand_cargo", "low_hatches", "mid_hatches", "high_hatches", "low_cargo", "mid_cargo", "high_cargo", "cargoship_hatches", "cargoship_cargo", "climb"] %>
         
         <h4>Best Single Matches</h4>
-        <% DB.fetch("SHOW COLUMNS FROM matches;").each do |col| %>
-            <% if included_cats.include? col[:Field]  %>
+        <% Match.columns.each do |col| %>
+            <% if included_cats.include?(col.to_s) %>
                 <table class="table table-condensed table-bordered" style="width: 40%;">
                     <thead>
                     <tr>
                         <th style="width: 33.33%;"><b>Team Number</b></th>
                         <th style="width: 33.33%;"><b>Match Number</b></th>
-                        <th style="width: 33.33%;"><b><%= col[:Field].gsub('_', ' ').split.map(&:capitalize).join(' ') %></b></th>
+                        <th style="width: 33.33%;"><b><%= col.to_s.gsub('_', ' ').split.map(&:capitalize).join(' ') %></b></th>
                     </tr>
                     </thead>
                     <tbody>
-                    <% DB.fetch("SELECT team_number, match_number, ? FROM matches ORDER BY ? DESC LIMIT 2;", col[:Field].to_sym, col[:Field].to_sym) do |row| %>
-                        <% num_matches = DB.fetch("SELECT COUNT(*) FROM matches WHERE team_number = ?;", row[:team_number]).all[0][:"COUNT(*)"] %>
-                        <tr>
-                            <td><%= row[:team_number] %></td>
-                            <td><%= row[:match_number] %></td>
-                            <td><%= row[col[:Field].to_sym] %></td>
-                        </tr>
-                    <% end %>
+                        <% DB[:matches].select(:team_number, :match_number, col.to_sym).limit(5).each do |row| %>
+                            <tr>
+                                <th><a href="/competitions/<%= @competition.id %>/teams/<%= row[:team_number] %>"><%= row[:team_number] %></a></th>
+                                <td><%= row[:match_number] %></td>
+                                <td><%= row[col.to_sym] %></td>
+                            </tr>
+                        <% end %>
                     </tbody>
                 </table>
                 <br> 
@@ -40,21 +38,21 @@
         <% end %>
 
         <h4>Best Averages</h4>
-        <% DB.fetch("SHOW COLUMNS FROM matches;").each do |col| %>
-            <% if included_cats.include? col[:Field]  %>
-                <table class="table table-condensed table-bordered" style="width: 40%;">
+        <% Match.columns.each do |col| %>
+            <% if included_cats.include?(col.to_s) %>
+                <table class="table table-condensed table-bordered" style="width: 26.67%;">
                     <thead>
                     <tr>
                         <th style="width: 50%;"><b>Team Number</b></th>
-                        <th style="width: 50%;"><b><%= col[:Field].gsub('_', ' ').split.map(&:capitalize).join(' ') %></b></th>
+                        <th style="width: 50%;"><b><%= col.to_s.gsub('_', ' ').split.map(&:capitalize).join(' ') %></b></th>
                     </tr>
                     </thead>
                     <tbody>
-                        <% DB.fetch("SELECT * FROM (SELECT team_number, avg(?) AS ? FROM matches GROUP BY team_number) AS average_query ORDER BY ? DESC LIMIT 2;",
-                                    col[:Field].to_sym, ('avg_' + col[:Field]).to_sym, ('avg_' + col[:Field]).to_sym) do |row| %>
+                        <% DB.fetch("SELECT * FROM (SELECT team_number, avg(?) AS ? FROM matches GROUP BY team_number) AS average_query ORDER BY ? DESC LIMIT 5;",
+                                    col.to_sym, ('avg_' + col.to_s).to_sym, ('avg_' + col.to_s).to_sym) do |row| %>
                             <tr>
-                                <td><%= row[:team_number] %></td>
-                                <td><%= row[('avg_' + col[:Field]).to_sym].to_f %></td>
+                                <th><a href="/competitions/<%= @competition.id %>/teams/<%= row[:team_number] %>"><%= row[:team_number] %></a></th>
+                                <td><%= row[('avg_' + col.to_s).to_sym].to_f %></td>
                             </tr>
                         <% end %>
                     </tbody>

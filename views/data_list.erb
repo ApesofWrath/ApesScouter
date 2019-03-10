@@ -1,7 +1,5 @@
 <div class="container">
     <div id="table-scroll" class="table-scroll">
-
-    <% if Match.where([[:comp_id, @competition.id], [:team_number, @team.number]]).count > 0 %> 
         <table class="table table-condensed table-bordered">
             <thead>
                 <tr>
@@ -30,8 +28,5 @@
                 <% end %>
             </tbody>
         </table>
-    <% else %>
-        <p>No matches found for team <%= @team.number %> at <%= @competition.name %>.</p>
-    <% end %>
     </div>
 </div>
