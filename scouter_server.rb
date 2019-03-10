@@ -32,17 +32,13 @@ class ApesScouter < Sinatra::Base
     end
 
     # Check that it is a valid project id
-    before "/competitions/:id*" do
-        if params[:id].to_s == "goto_err"
-            halt(400, "Please select a place to go to.")
-        end
-        
+    before '/competitions/:id*' do
         @competition = Competition[params[:id]]
         halt(400, "Invalid competition (id).") if @competition.nil?
     end
 
     # Competition page with match entries
-    get "/competitions/:id" do
+    get '/competitions/:id' do
         # Sorting 
         cols = [] 
         DB.fetch("SHOW COLUMNS FROM matches;").each do |col|
@@ -58,7 +54,7 @@ class ApesScouter < Sinatra::Base
     end
 
     # Competition Stats
-    get "/competitions/:id/stats" do
+    get '/competitions/:id/stats' do
         @competition = Competition[params[:id]]
         erb :stats
     end
@@ -71,11 +67,16 @@ class ApesScouter < Sinatra::Base
     # Add new match data to database
     post '/matches' do
         # Check if entry exists for team with same match number
-        if DB.fetch("SELECT COUNT(*) FROM matches WHERE team_number = ? AND match_number = ?;", params[:team_number], params[:match_number]).first[:"COUNT(*)"].to_i != 0
+        if DB.fetch("SELECT COUNT(*) FROM matches WHERE comp_id = ? AND team_number = ? AND match_number = ?;", 
+                    params[:comp_id], params[:team_number], params[:match_number]).first[:"COUNT(*)"].to_i != 0
             halt(400, "Entry found with same team number and match number. Please check your values.")
         end
 
-        # Check parameter existence and format.
+        # Check if it is the first entry for this team. If so, create entry in teams table.
+        if Match.where(:team_number => params[:team_number]).all.length == 0
+            Team.create(:number => params[:team_number])
+        end
+
         match = Match.create(:comp_id => params[:comp_id], :team_number => params[:team_number], :match_number => params[:match_number], 
                              :name => params[:name], :preload => params[:preload], :hab_start => params[:hab_start], 
                              :hab_cross => params[:hab_cross], :sand_hatches => params[:sand_hatches], :sand_cargo => params[:sand_cargo], 
@@ -90,6 +91,33 @@ class ApesScouter < Sinatra::Base
                              :driver_skill => params[:driver_skill], :played_defense => params[:played_defense], :notes => params[:notes])
         
         redirect "/competitions/#{match.comp_id}"
+    end
+
+    # Check that it is a valid team
+    before '/competitions/:id/teams/:number*' do
+        @team = Team[params[:number]]
+        halt(400, "Team \"#{params[:number]}\" was not found.") if @team.nil?
+    end
+
+    # Team page (with stats)
+    get '/competitions/:id/teams/:number' do
+        # Sorting 
+        cols = [] 
+        DB.fetch("SHOW COLUMNS FROM matches;").each do |col|
+            cols.push(col[:Field])
+        end
+        if cols.include?(params[:sort])
+            @match_sort = params[:sort].to_sym
+        else
+            @match_sort = :match_number
+        end
+
+        erb :team
+    end
+    
+    # Teams List
+    get '/teams' do
+        erb :teams
     end
 end
 

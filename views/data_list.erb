@@ -22,7 +22,7 @@
                             <% val.each do |data| %>
                                 <% DB.fetch("SELECT ? FROM matches WHERE id=?;", data.first, match.id) do |v| %>
                                     <% if col_index == 2 %>
-                                        <th><%= v[data.first].to_s.gsub(' ', '&nbsp;') %></td>
+                                        <th><a href="/competitions/<%= match.comp_id %>/teams/<%= match.team_number %>"><%= v[data.first] %></a></td>
                                     <% elsif col_index > 2 %>
                                         <td><%= v[data.first].to_s.gsub(' ', '&nbsp;') %></td>
                                     <% end %>
