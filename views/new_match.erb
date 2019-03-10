@@ -238,7 +238,7 @@
           reloadValues();
     };
 
-    var lastId = "";
+    var lastIds = [];
     var data = {
         "sand_hatches": 0,
         "sand_cargo": 0,
@@ -255,19 +255,25 @@
     };
     
     function addOne(id) {
-        lastId = id;
+        lastIds.push(id);
         data[id]++;
         document.getElementById(id).value = data[id];
         document.getElementById("history").innerHTML = "Last button press: " + id.replace(/_/g, ' ');
     };
 
     function undo() {
-        if(data[lastId] > 0) {
-            data[lastId]--;
-            document.getElementById(lastId).value = data[lastId];
+        if(data[lastIds[lastIds.length - 1]] > 0) {
+            data[lastIds[lastIds.length - 1]]--;
+            document.getElementById(lastIds[lastIds.length - 1]).value = data[lastIds[lastIds.length - 1]];
         }
-        lastId = "";
-        document.getElementById("history").innerHTML = "Last button press: None"
+        lastIds.splice(lastIds.length -1, 1);
+
+        if(lastIds.length > 0) {
+            document.getElementById("history").innerHTML = "Last button press: " + lastIds[lastIds.length - 1].replace(/_/g, ' ');
+        }
+        else {
+            document.getElementById("history").innerHTML = "Last button press: None";
+        }
     };
 
     function reloadValues() {
