@@ -1,40 +1,37 @@
 <div class="container">
     <div id="table-scroll" class="table-scroll">
-    <table class="table table-condensed table-bordered">
-        <thead>
-            <tr>
-                <% col_index = 0 %>
-                <% DB.fetch("SHOW COLUMNS FROM matches;").each do |col| %>
-                    <% if col_index >= 2 %>
-                        <th scope="col"><a href="?sort=<%= col[:Field] %>"><%= col[:Field].to_s.gsub('_', '&nbsp;') %></a></th>
-                    <% else %>
-                        <% col_index = col_index + 1 %>
-                    <% end %>
-                <% end %>
-            </tr>
-        </thead>
-        <tbody>
-            <% matches.each do |match| %>
-                <% col_index = 0 %>
+
+    <% if Match.where([[:comp_id, @competition.id], [:team_number, @team.number]]).count > 0 %> 
+        <table class="table table-condensed table-bordered">
+            <thead>
                 <tr>
-                    <% DB.fetch("SHOW COLUMNS FROM matches;") do |col| %>
-                        <% DB.fetch("SELECT ? FROM matches WHERE id=?;", col[:Field], match.id) do |val| %>
-                            <% val.each do |data| %>
-                                <% DB.fetch("SELECT ? FROM matches WHERE id=?;", data.first, match.id) do |v| %>
-                                    <% if col_index == 2 %>
-                                        <th><a href="/competitions/<%= match.comp_id %>/teams/<%= match.team_number %>"><%= v[data.first] %></a></td>
-                                    <% elsif col_index > 2 %>
-                                        <td><%= v[data.first].to_s.gsub(' ', '&nbsp;') %></td>
+                    <% Match.columns[2..-1].each do |col| %>
+                        <th scope="col"><a href="?sort=<%= col %>"><%= col.to_s.gsub('_', '&nbsp;') %></a></th>
+                    <% end %>
+                </tr>
+            </thead>
+            <tbody>
+                <% matches.each do |match| %>
+                    <tr>
+                        <% Match.columns[0..-1].each.with_index do |col, index| %>
+                            <% Match.select(col).where(:id => match.id).each do |val| %>
+                                <% val.each do |data| %>
+                                    <% Match.select(data.first).where(:id => match.id).each do |v| %>
+                                        <% if index == 2 %>
+                                            <th><a href="/competitions/<%= match.comp_id %>/teams/<%= match.team_number %>"><%= v[data.first] %></a></td>
+                                        <% elsif index > 2 %>
+                                            <td><%= v[data.first].to_s.gsub(' ', '&nbsp;') %></td>
+                                        <% end %>
                                     <% end %>
-                                    <% col_index = col_index + 1 %>
                                 <% end %>
                             <% end %>
                         <% end %>
-                    <% end %>
-                </tr>
-                <% col_index = 0 %>
-            <% end %>
-        </tbody>
-    </table>
+                    </tr>
+                <% end %>
+            </tbody>
+        </table>
+    <% else %>
+        <p>No matches found for team <%= @team.number %> at <%= @competition.name %>.</p>
+    <% end %>
     </div>
 </div>
