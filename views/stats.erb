@@ -3,10 +3,64 @@
 <div class="container">
     <h3><b><%= @competition.name %> <%= @competition.year %> - Stats</b></h3>
 
-    <% top_sand_hatches = [] %>
-    <% Match.where(:comp_id => @competition.id).each do |match| %>
-        <% if match.team_number.to_i == 668 %>
-            <p><%= match.low_hatches %></p>
+    <hr>
+
+    <% num_matches = DB.fetch("SELECT COUNT(*) FROM matches WHERE comp_id = ?;", @competition.id).all[0][:"COUNT(*)"] %>
+    <% if num_matches == 0 %>
+        <p>No match data found for <%= @competition.name %>.</p>
+    <% else %>
+
+        <!-- Get categories except id and comp_id -->
+        <% included_cats = ["sand_hatches", "sand_cargo", "low_hatches", "mid_hatches", "high_hatches", "low_cargo", "mid_cargo", "high_cargo", "cargoship_hatches", "cargoship_cargo", "climb"] %>
+        
+        <h4>Best Single Matches</h4>
+        <% DB.fetch("SHOW COLUMNS FROM matches;").each do |col| %>
+            <% if included_cats.include? col[:Field]  %>
+                <table class="table table-condensed table-bordered" style="width: 40%;">
+                    <thead>
+                    <tr>
+                        <th style="width: 33.33%;"><b>Team Number</b></th>
+                        <th style="width: 33.33%;"><b>Match Number</b></th>
+                        <th style="width: 33.33%;"><b><%= col[:Field].gsub('_', ' ').split.map(&:capitalize).join(' ') %></b></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <% DB.fetch("SELECT team_number, match_number, ? FROM matches ORDER BY ? DESC LIMIT 2;", col[:Field].to_sym, col[:Field].to_sym) do |row| %>
+                        <% num_matches = DB.fetch("SELECT COUNT(*) FROM matches WHERE team_number = ?;", row[:team_number]).all[0][:"COUNT(*)"] %>
+                        <tr>
+                            <td><%= row[:team_number] %></td>
+                            <td><%= row[:match_number] %></td>
+                            <td><%= row[col[:Field].to_sym] %></td>
+                        </tr>
+                    <% end %>
+                    </tbody>
+                </table>
+                <br> 
+            <% end %>
+        <% end %>
+
+        <h4>Best Averages</h4>
+        <% DB.fetch("SHOW COLUMNS FROM matches;").each do |col| %>
+            <% if included_cats.include? col[:Field]  %>
+                <table class="table table-condensed table-bordered" style="width: 40%;">
+                    <thead>
+                    <tr>
+                        <th style="width: 50%;"><b>Team Number</b></th>
+                        <th style="width: 50%;"><b><%= col[:Field].gsub('_', ' ').split.map(&:capitalize).join(' ') %></b></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                        <% DB.fetch("SELECT * FROM (SELECT team_number, avg(?) AS ? FROM matches GROUP BY team_number) AS average_query ORDER BY ? DESC LIMIT 2;",
+                                    col[:Field].to_sym, ('avg_' + col[:Field]).to_sym, ('avg_' + col[:Field]).to_sym) do |row| %>
+                            <tr>
+                                <td><%= row[:team_number] %></td>
+                                <td><%= row[('avg_' + col[:Field]).to_sym].to_f %></td>
+                            </tr>
+                        <% end %>
+                    </tbody>
+                </table>
+                <br>
+            <% end %>
         <% end %>
     <% end %>
 </div>
