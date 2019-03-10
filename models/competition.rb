@@ -1,4 +1,4 @@
-# Copyright 2019#
+# Copyright 2019
 # The Apes of Wrath
 #
 # @author Cody King
