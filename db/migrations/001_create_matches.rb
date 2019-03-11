@@ -42,7 +42,7 @@ Sequel.migration do
             String :cargo_human_intake, :null => false
             String :driver_skill, :null => false
             String :played_defense, :null => false
-            Text :notes, :default => ""
+            Text :notes
         end
     end
 end
