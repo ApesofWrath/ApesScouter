@@ -1,2 +1,4 @@
 passenger.*
 Gemfile.lock
+*.log
+*.pid
