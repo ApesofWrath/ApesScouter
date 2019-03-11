@@ -17,6 +17,7 @@ Sequel.migration do
             String :hab_cross, :null => false
             Integer :sand_hatches, :null => false
             Integer :sand_cargo, :null => false
+            String :sand_cargo_fallout, :null => false
             Integer :low_hatches, :null => false
             Integer :mid_hatches, :null => false
             Integer :high_hatches, :null => false

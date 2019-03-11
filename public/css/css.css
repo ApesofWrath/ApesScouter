@@ -102,6 +102,7 @@ html {
 .table-scroll {
     position: relative;
     width:100%;
+    height: 90vh;
     z-index: 1;
     margin: auto;
     overflow: scroll;

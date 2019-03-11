@@ -11,7 +11,7 @@ require './models.rb'
 class ApesScouter < Sinatra::Base
 
     get '/' do
-        erb :index
+        erb :competitions
     end
 
     # Competitions
@@ -79,7 +79,7 @@ class ApesScouter < Sinatra::Base
 
         match = Match.create(:comp_id => params[:comp_id], :team_number => params[:team_number], :match_number => params[:match_number], 
                              :name => params[:name], :preload => params[:preload], :hab_start => params[:hab_start], 
-                             :hab_cross => params[:hab_cross], :sand_hatches => params[:sand_hatches], :sand_cargo => params[:sand_cargo], 
+                             :hab_cross => params[:hab_cross], :sand_hatches => params[:sand_hatches], :sand_cargo => params[:sand_cargo], :sand_cargo_fallout => params[:sand_cargo_fallout],
                              :low_hatches => params[:low_hatches], :mid_hatches => params[:mid_hatches], :high_hatches => params[:high_hatches], 
                              :low_cargo => params[:low_cargo], :mid_cargo => params[:mid_cargo], :high_cargo => params[:high_cargo], 
                              :cargoship_hatches => params[:cargoship_hatches], :cargoship_cargo => params[:cargoship_cargo], 
