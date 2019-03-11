@@ -6,8 +6,19 @@
             <i class="icon-white icon-plus-sign"></i> New Match
         </a>
     </div>
-    <h3><b><%= @competition.name %> <%= @competition.year %> - All Match Data</b></h3>
-    <%= erb :data_list, :locals => { :matches => Match.where(:comp_id => @competition.id).order(@match_sort) } %>
+    <h3><b><%= @competition.name %> <%= @competition.year %> - All Match Data</b></h3
+
+    <!-- Temporary redirect -->
+    <% if @competition.name.to_s != "SFR" %>
+        <p>This is for SVR. Did you mean SFR? <a href="/competitions/1">YES </a><a href="/competitions/1">NO</a></p> 
+    <% else %>
+
+    <% if @match_sort.to_s == "team_number" || @match_sort.to_s == "match_number" %>
+        <%= erb :data_list, :locals => { :matches => Match.where(:comp_id => @competition.id).order(Sequel.asc(@match_sort)) } %>
+    <% else %>
+        <%= erb :data_list, :locals => { :matches => Match.where(:comp_id => @competition.id).order(Sequel.desc(@match_sort)) } %>
+    <% end %>
+<% end %>
 </div>
 <br>
 

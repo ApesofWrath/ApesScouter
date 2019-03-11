@@ -14,9 +14,10 @@ Sequel.migration do
             String :name, :null => false
             String :preload, :null => false
             Integer :hab_start, :null => false
-            Integer :hab_cross, :null => false
+            String :hab_cross, :null => false
             Integer :sand_hatches, :null => false
             Integer :sand_cargo, :null => false
+            String :sand_cargo_fallout, :null => false
             Integer :low_hatches, :null => false
             Integer :mid_hatches, :null => false
             Integer :high_hatches, :null => false
@@ -29,13 +30,17 @@ Sequel.migration do
             Integer :dropped_cargo, :null => false
             Integer :climb, :null => false
             String :result, :null => false
+            Integer :own_score, :null => false
+            Integer :opp_score, :null => false
+            Integer :ranking_points, :null => false
             String :buddy_climb, :null => false
             String :ramp_bot, :null => false
+            String :camera, :null => false
             String :hatch_ground_pickup, :null => false
             String :cargo_ground_pickup, :null => false
             String :hatch_human_intake, :null => false
             String :cargo_human_intake, :null => false
-            Integer :driver_skill, :null => false
+            String :driver_skill, :null => false
             String :played_defense, :null => false
             Text :notes, :default => ""
         end
