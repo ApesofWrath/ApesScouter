@@ -4,7 +4,7 @@
             <thead>
                 <tr>
                     <% Match.columns[2..-1].each do |col| %>
-                        <th scope="col"><a href="?sort=<%= col %>"><%= col.to_s.gsub('_', '&nbsp;') %></a></th>
+                        <th scope="col"><a href="?sort=<%= col %>"><%= col.to_s.gsub('_', '&nbsp;').split.map(&:capitalize).join(' ') %></a></th>
                     <% end %>
                 </tr>
             </thead>
