@@ -25,10 +25,30 @@ module ApesScouter
             erb :new_competition
         end
 
+        # Delete Competition
+        get '/delete_comp' do
+            erb :delete_comp
+        end
+
+        get '/competitions/:id/delete' do
+            erb :delete_confirm
+        end
+        
+        post '/competitions/:id/delete' do
+            @competition.delete
+            redirect "/competitions"
+        end
+
         # List of competitions to choose from
         post '/competitions' do
-            # Check parameter existence and format.
-            competition = Competition.create(:name => params[:name], :year => params[:year])
+            # Check for duplicate entry
+            begin
+                competition = Competition.create(:name => params[:name], :year => params[:year])
+                competition.save
+                rescue Sequel::UniqueConstraintViolation
+                    halt(400, "Competition already exists.")
+            end
+
             redirect "/competitions/#{competition.id}"
         end
 
