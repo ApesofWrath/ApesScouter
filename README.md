@@ -34,15 +34,13 @@ Due to the fact that this system was designed to be run locally, there is no aut
 
 Prerequisites (in addition to those above):
 
-* hostapd
-* dnsmasq
 * Apache
 
 1. Setup Apache as the webserver (Nginx should work as well). [Guide](https://www.digitalocean.com/community/tutorials/how-to-install-the-apache-web-server-on-debian-9)
-1. Clone this repository (take note of the directory).
-1. Follow the steps above, except for step 6. (**Note: in addition to setting a system environment variable, you may need to set the environment variable in your Apache virtual host file using `SetEnv` -> `SetEnv DB_PASS your_password`**)
+1. Clone this repository in the directory of your choice).
+1. Follow the steps above, except for step 7.
 1. Open the port where the site is running (9000 if using the default values): `sudo iptables -A INPUT -p tcp --dport 9000 -j ACCEPT`
-1. Redirect port 80 to 9000: `sudo iptables -t nat -A PREROUTING -p tcp --dport 80 -j REDIRECT --to 9000`
+1. Redirect the public webserver port 80 to 9000: `sudo iptables -t nat -A PREROUTING -p tcp --dport 80 -j REDIRECT --to 9000`
 1. Public IP address or domain should now work for your site.
 
 ## Contributing
