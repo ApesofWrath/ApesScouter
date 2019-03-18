@@ -25,7 +25,8 @@ To run the server locally:
 1. Run `bundle install`. This will download and install the gems that Apes Scouter depends on.
 1. Run `bundle exec rake db:migrate`. This will run the database migrations to create the necessary tables in
 MySQL. **Please make sure your database has been created and that it is empty with no tables in it. Otherwise this command will fail**.
-1. Run `rackup config.ru` and you should be able to run the app in the browser at `http://localhost:XXXX`, where `XXXX` is the four-digit port specified after running the `rackup` command.
+1. Run `ruby parts_server_control.rb <command>` to control the running of the Apes Scouter server, where `<command>` can be one of `start|stop|run|restart`.
+1. Go to `http://localhost:9000` in the browser.
 
 Due to the fact that this system was designed to be run locally, there is no authetication for the site. If you are planning on putting this out on the internet I highly recommend some sort of SSO mechanism.
 
@@ -36,13 +37,13 @@ Prerequisites (in addition to those above):
 * hostapd
 * dnsmasq
 * Apache
-* Passenger
 
 1. Setup Apache as the webserver (Nginx should work as well). [Guide](https://www.digitalocean.com/community/tutorials/how-to-install-the-apache-web-server-on-debian-9)
 1. Clone this repository (take note of the directory).
 1. Follow the steps above, except for step 6. (**Note: in addition to setting a system environment variable, you may need to set the environment variable in your Apache virtual host file using `SetEnv` -> `SetEnv DB_PASS your_password`**)
-1. Setup Passenger. [Guide](https://www.phusionpassenger.com/docs/tutorials/what_is_passenger/)
-1. Start Passenger.
+1. Open the port where the site is running (9000 if using the default values): `sudo iptables -A INPUT -p tcp --dport 9000 -j ACCEPT`
+1. Redirect port 80 to 9000: `sudo iptables -t nat -A PREROUTING -p tcp --dport 80 -j REDIRECT --to 9000`
+1. Public IP address or domain should now work for your site.
 
 ## Contributing
 
