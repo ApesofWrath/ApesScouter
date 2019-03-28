@@ -157,6 +157,55 @@ module ApesScouter
             redirect "/competitions/#{match.comp_id}"
         end
 
+        # Check that it is a valid project id
+        before '/matches/:id*' do
+            @match = Match[params[:id]]
+            halt(400, "Invalid match (id).") if @match.nil?
+        end
+        
+        get '/matches/:id/edit' do
+            erb :match_edit
+        end
+
+        post "/matches/:id/edit" do
+            @match = Match[params[:id]]
+            @match.team_number = params[:team_number]
+            @match.match_number = params[:match_number]
+            @match.preload = params[:preload]
+            @match.hab_start = params[:hab_start]
+            @match.hab_cross = params[:hab_cross]
+            @match.sand_hatches = params[:sand_hatches]
+            @match.sand_cargo = params[:sand_cargo]
+            @match.sand_cargo_fallout = params[:sand_cargo_fallout]
+            @match.low_hatches = params[:low_hatches]
+            @match.mid_hatches = params[:mid_hatches]
+            @match.high_hatches = params[:high_hatches]
+            @match.low_cargo = params[:low_cargo]
+            @match.mid_cargo = params[:mid_cargo]
+            @match.high_cargo = params[:high_cargo]
+            @match.cargoship_hatches = params[:cargoship_hatches]
+            @match.cargoship_cargo = params[:cargoship_cargo]
+            @match.dropped_hatches = params[:dropped_hatches]
+            @match.dropped_cargo = params[:dropped_cargo]
+            @match.climb = params[:climb]
+            @match.result = params[:result]
+            @match.own_score = params[:own_score]
+            @match.opp_score = params[:opp_score]
+            @match.ranking_points = params[:ranking_points]
+            @match.buddy_climb = params[:buddy_climb]
+            @match.ramp_bot = params[:ramp_bot]
+            @match.camera = params[:camera]
+            @match.cargo_ground_pickup = params[:cargo_ground_pickup]
+            @match.hatch_ground_pickup = params[:hatch_ground_pickup]
+            @match.cargo_human_intake = params[:cargo_human_intake]
+            @match.hatch_human_intake = params[:hatch_human_intake]
+            @match.driver_skill = params[:driver_skill]
+            @match.notes = params[:notes]
+            @match.save
+
+            redirect "/competitions/#{@match.comp_id}"
+        end
+
         # Check that it is a valid team
         before '/competitions/:id/teams/:number*' do
             @team = Team[params[:number]]
