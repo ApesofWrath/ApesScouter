@@ -1,0 +1,88 @@
+<%= erb :header %>
+
+<div class="container">
+    <h2>Enter Team Info (<%= @competition.name %> - <%= @competition.year %>)</h2>
+    <form action="/pit_scouting" method="POST" id="myForm" enctype="multipart/form-data">
+        <label>Name</label>
+        <input type="text" name="scouter_name" required placeholder="Name of scouter"/>
+
+        <label>Team Name</label>
+        <input type="text" name="team_name" required />
+
+        <label>Team Number</label>
+        <input type="number" min=1 max=9999 name="team_number" required />
+
+        <label>Do they use cameras?</label>
+        <select name="camera" required>
+            <option value="" selected disabled hidden>Select Value</option>
+            <option value="Yes">Yes</option>
+            <option value="No">No</option>
+        </select>
+
+        <label>What do they use their cameras for?</label>
+        <textarea name="camera_use" rows="4" placeholder="Leave blank if they don't use cameras."></textarea>
+
+        <label>What is their sandstorm strategy?</label>
+        <textarea name="sand_strat" rows="4" placeholder="Cargo ship? Rocket? Just drive? Autonomous?"></textarea>
+
+        <label>Climbing and Hab Strategy</label>
+        <select name="hab_start" required>
+            <option value="" selected disabled hidden>Where do they start?</option>
+            <option value="Level 1">Level 1</option>
+            <option value="Level 2">Level 2</option>
+        </select>
+        <br>
+        <select name="climb" required>
+            <option value="" selected disabled hidden>Which climbs can they do?</option>
+            <option value="All levels">All</option>
+            <option value="Levels 1 & 2">Levels 1 and 2</option>
+            <option value="Levels 1 & 3">Levels 1 and 3</option>
+            <option value="Only level 1">Level 1</option>
+            <option vale="None">None</option>
+        </select>
+
+        <label>Game Strategy</label>
+        <textarea name="strategy" rows="4" placeholder="Hatches? Cargo? Cargoship? Rocket? Both?"></textarea>
+
+        <fieldset>
+            <label>Cargo Intake</label>
+            <div>
+                <p><input type="checkbox" id="cargo_preload" name="cargo_intake[]" value="Preload"> Preload</p>
+            </div>
+            <div>
+                <p><input type="checkbox" id="cargo_station" name="cargo_intake[]" value="Loading Station"> Human Player Station</p>
+            </div>
+            <div>
+                <p><input type="checkbox" id="cargo_ground" name="cargo_intake[]" value="Ground"> Ground Pickup</p>
+            </div>
+        </fieldset>
+
+        <fieldset>
+            <label>Hatch Intake</label>
+            <div>
+                <p><input type="checkbox" id="hatch_preload" name="hatch_intake[]" value="Preload"> Preload</p>
+            </div>
+            <div>
+                <p><input type="checkbox" id="hatch_station" name="hatch_intake[]" value="Loading Station"> Human Player Station</p>
+            </div>
+            <div>
+                <p><input type="checkbox" id="hatch_ground" name="hatch_intake[]" value="Ground"> Ground Pickup</p>
+            </div>
+        </fieldset>
+
+        <textarea name="notes" rows="4" placeholder="Additional notes?"></textarea>
+
+        <br><br>
+
+        <label>Add Picture of Robot</label>
+        <input type="file" name="file" accept="image/*" capture="camera" required>
+
+        <br><br>
+        <input type=hidden name="comp_id" value="<%= @competition.id %>">
+
+        <label><input type="submit" class="btn btn-success btn-large" value="Save Info"></label>
+    </form>
+</div>
+
+<%= erb :footer %>
+

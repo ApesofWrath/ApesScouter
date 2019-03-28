@@ -1,4 +1,4 @@
-passenger.*
 Gemfile.lock
 *.log
 *.pid
+public/robots

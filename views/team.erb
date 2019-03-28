@@ -9,6 +9,34 @@
         <%= erb :data_list, :locals => { :matches => Match.where([[:comp_id, @competition.id], [:team_number, @team.number]]).order(Sequel.desc(@match_sort)) } %>
     <% end %>
 
+    <!-- Pit Scouting Data -->
+
+    <% if Pit_Scouting.where(:team_number => @team.number).all.length == 0 %>
+        <h4 style="margin-top: -275px">No pit scouting data found.</h4>
+    <% else %>
+        <h4 style="margin-top: -275px">Pit Scouting Data</h4>
+
+        <div class="container">
+            <table class="table table-condensed table-bordered">
+                <% Pit_Scouting.where([[:comp_id, @competition.id], [:team_number, @team.number]]).each do |scout| %>
+                    <% Pit_Scouting.columns[2..-1].each.with_index do |col, index| %>
+                        <tr>
+                            <th style="width: 15%;"><%= col.to_s.gsub('_', '&nbsp;').split.map(&:capitalize).join(' ') %></th>
+                            <% Pit_Scouting.select(col).where(:id => scout.id).each do |val| %>
+                                <% val.each do |data| %>
+                                    <% Pit_Scouting.select(data.first).where(:id => scout.id).each do |v| %>
+                                        <td style="width: 85%;"><%= v[data.first].to_s.gsub(' ', '&nbsp;') %></td>
+                                    <% end %>
+                                <% end %>
+                            <% end %>
+                        </tr>
+                    <% end %>
+                <% end %>
+            </table>
+        </div> 
+
+        <img style="margin-bottom: 20px;" src="/robots/<%= @team.number %>_<%= @competition.id %>" alt="Picture of robot for team <%= @team.number %>" />
+    <% end %>
 
     <!-- Show other competitions the team was at -->
     <% # DB[:competitions].select_map(:name).where(each do |comp| %>

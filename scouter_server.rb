@@ -79,9 +79,50 @@ module ApesScouter
             @competition = Competition[params[:id]]
             erb :stats
         end
+
+        # New Pit Scouting
+        get '/competitions/:id/new_pit_scout' do
+            if Competition[params[:id]].name == "SFR"
+                halt(400, "I think you've taken a wrong turn...");
+            end
+            erb :new_pit_scout
+        end
+
+        post '/pit_scouting' do
+            # Check if entry exists for team
+            if DB.fetch("SELECT COUNT(*) FROM pit_scouting WHERE comp_id = ? AND team_number = ?;", 
+                        params[:comp_id], params[:team_number]).first[:"COUNT(*)"].to_i != 0
+                halt(400, "Entry found with same team number. Please check your values.")
+            end
+
+            # Write image file
+            @filename = params[:file][:filename]
+            file = params[:file][:tempfile]
+            File.open("./public/robots/#{params[:team_number]}_#{params[:comp_id]}", 'wb') do |f|
+                f.write(file.read)
+            end
+           
+            # Check if it is the first entry for this team. If so, create entry in teams table.
+            if Team.where(:number => params[:team_number]).all.length == 0
+                Team.create(:number => params[:team_number])
+            end
+
+            team_data = Pit_Scouting.create(:comp_id => params[:comp_id], :scouter_name => params[:scouter_name],
+                                            :team_name => params[:team_name], :team_number => params[:team_number],
+                                            :camera => params[:camera], :camera_use => params[:camera_use],
+                                            :sand_strat => params[:sand_strat], :hab_start => params[:hab_start],
+                                            :climb => params[:climb], :strategy => params[:strategy],
+                                            :cargo_intake => params[:cargo_intake].join(', '), :hatch_intake => params[:hatch_intake].join(', '),
+                                            :notes => params[:notes])
+
+            redirect "/competitions/#{team_data.comp_id}/teams/#{team_data.team_number}"
+        end
         
         # Add new match entry
         get '/competitions/:id/new_match' do
+            if Competition[params[:id]].name == "SFR"
+                halt(400, "I think you've taken a wrong turn...");
+            end
             erb :new_match
         end
 
@@ -94,23 +135,25 @@ module ApesScouter
             end
 
             # Check if it is the first entry for this team. If so, create entry in teams table.
-            if Match.where(:team_number => params[:team_number]).all.length == 0
+            if Team.where(:number => params[:team_number]).all.length == 0
                 Team.create(:number => params[:team_number])
             end
 
             match = Match.create(:comp_id => params[:comp_id], :team_number => params[:team_number], :match_number => params[:match_number], 
                                  :name => params[:name], :preload => params[:preload], :hab_start => params[:hab_start], 
-                                 :hab_cross => params[:hab_cross], :sand_hatches => params[:sand_hatches], :sand_cargo => params[:sand_cargo], :sand_cargo_fallout => params[:sand_cargo_fallout],
-                                 :low_hatches => params[:low_hatches], :mid_hatches => params[:mid_hatches], :high_hatches => params[:high_hatches], 
-                                 :low_cargo => params[:low_cargo], :mid_cargo => params[:mid_cargo], :high_cargo => params[:high_cargo], 
+                                 :hab_cross => params[:hab_cross], :sand_hatches => params[:sand_hatches], :sand_cargo => params[:sand_cargo], 
+                                 :sand_cargo_fallout => params[:sand_cargo_fallout], :low_hatches => params[:low_hatches], 
+                                 :mid_hatches => params[:mid_hatches], :high_hatches => params[:high_hatches], :low_cargo => params[:low_cargo], 
+                                 :mid_cargo => params[:mid_cargo], :high_cargo => params[:high_cargo], 
                                  :cargoship_hatches => params[:cargoship_hatches], :cargoship_cargo => params[:cargoship_cargo], 
                                  :dropped_hatches => params[:dropped_hatches], :dropped_cargo => params[:dropped_cargo], :climb => params[:climb],
                                  :result => params[:result], :own_score => params[:own_score], :opp_score => params[:opp_score], 
                                  :ranking_points => params[:ranking_points],:buddy_climb => params[:buddy_climb], :ramp_bot => params[:ramp_bot], 
-                                 :camera => params[:camera],:hatch_ground_pickup => params[:hatch_ground_pickup], :cargo_ground_pickup => params[:cargo_ground_pickup], 
-                                 :hatch_human_intake => params[:hatch_human_intake], :cargo_human_intake => params[:cargo_human_intake], 
-                                 :driver_skill => params[:driver_skill], :played_defense => params[:played_defense], :notes => params[:notes])
-            
+                                 :camera => params[:camera],:hatch_ground_pickup => params[:hatch_ground_pickup], 
+                                 :cargo_ground_pickup => params[:cargo_ground_pickup], :hatch_human_intake => params[:hatch_human_intake], 
+                                 :cargo_human_intake => params[:cargo_human_intake], :driver_skill => params[:driver_skill], 
+                                 :played_defense => params[:played_defense], :notes => params[:notes])
+       
             redirect "/competitions/#{match.comp_id}"
         end
 
@@ -139,6 +182,23 @@ module ApesScouter
         # Teams List
         get '/teams' do
             erb :teams
+        end
+
+
+        # Image Upload
+        get '/upload' do
+            erb :upload
+        end
+
+        post '/save_image' do
+            @filename = params[:file][:filename]
+            file = params[:file][:tempfile]
+
+            File.open("./public/robots/sfr_2019/#{@filename}", 'wb') do |f|
+                f.write(file.read)
+            end
+
+            erb :show_image
         end
     end
 end

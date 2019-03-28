@@ -149,3 +149,19 @@ thead th {
 select, button{
     vertical-align:top;
 }
+
+/* vertically align file button and text */
+input[type="file"] {
+    line-height: 1ex;
+}
+
+/* vertically align checkboxes and labels */
+input[type="checkbox"] {
+    float: left;
+    line-height: 1.6em;
+    height: 1.6em;
+    margin: 0px 2px;
+    padding: 0px;
+    font-size: inherit;
+}
+

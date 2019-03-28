@@ -2,7 +2,7 @@
 
 <div class="container">
     <h2>Enter New Match Info (<%= @competition.name %> - <%= @competition.year %>)</h2>
-    <form action="/matches" method="POST" id="myForm">
+    <form action="/matches" method="POST" id="myForm" enctype="multipart/form-data">
         <label>Name</label>
         <input type="text" name="name" required placeholder="Name of scouter"/>
 
@@ -10,7 +10,7 @@
         <input type="number" min=1 max=9999 name="team_number" required />
 
         <label>Match Number</label>
-        <input type="number" min=1 max=99 name="match_number" required placeholder="Qualification Match Number" />
+        <input type="number" min=1 max=200 name="match_number" required placeholder="Qualification Match Number" />
 
         <br>
 
@@ -30,209 +30,209 @@
             <option value="no">No</option>
          </select>
 
-    <label>Hab Start</label>
-    <select name="hab_start" required>
-        <option value="" selected disabled hidden>Which level did bot start on?</option>
-        <option value="1">Level 1</option>
-        <option value="2">Level 2</option>
-    </select>
+        <label>Hab Start</label>
+        <select name="hab_start" required>
+            <option value="" selected disabled hidden>Which level did bot start on?</option>
+            <option value="1">Level 1</option>
+            <option value="2">Level 2</option>
+        </select>
 
-    <br>
-    
-    <!-- Sandstorm Hatches and Cargo -->
-    <label>Scored Pieces DURING THE SANDSTORM PERIOD</label>
-    <table class="table table-condensed table-bordered" style="width: auto;">
-        <tr>
-            <td><button type=button class="btn btn-info btn-large" onClick="addOne('sand_hatches')">Hatches:</button></td>
-            <td><input type="text" value="0" readonly="readonly" style="width:5em" name="sand_hatches" id="sand_hatches"></td>
-        </tr>
-        <tr>
-            <td><button type=button class="btn btn-warning btn-large" onClick="addOne('sand_cargo')">Cargo:</button></td>
-            <td><input type="text" value="0" readonly="readonly" style="width:5em" name="sand_cargo" id="sand_cargo"></td>
-        </tr>
-    </table>
+        <br>
+        
+        <!-- Sandstorm Hatches and Cargo -->
+        <label>Scored Pieces DURING THE SANDSTORM PERIOD</label>
+        <table class="table table-condensed table-bordered" style="width: auto;">
+            <tr>
+                <td><button type=button class="btn btn-info btn-large" onClick="addOne('sand_hatches')">Hatches:</button></td>
+                <td><input type="text" value="0" readonly="readonly" style="width:5em" name="sand_hatches" id="sand_hatches"></td>
+            </tr>
+            <tr>
+                <td><button type=button class="btn btn-warning btn-large" onClick="addOne('sand_cargo')">Cargo:</button></td>
+                <td><input type="text" value="0" readonly="readonly" style="width:5em" name="sand_cargo" id="sand_cargo"></td>
+            </tr>
+        </table>
 
-    <br>
+        <br>
 
-    <label>Alliance had more than 4 cargo fall out at end of Sandstorm</label>
-    <select name="sand_cargo_fallout" required>
-        <option value="" selected disabled hidden>Select Option</option>
-        <option value="yes">Yes</option>
-        <option value="no">No</option>
-    </select>   
+        <label>Alliance had more than 4 cargo fall out at end of Sandstorm</label>
+        <select name="sand_cargo_fallout" required>
+            <option value="" selected disabled hidden>Select Option</option>
+            <option value="yes">Yes</option>
+            <option value="no">No</option>
+        </select>   
 
-    <h3>Tele Op</h3>
-    <label>Rocket Ship</label>
-    <table class="table table-condensed table-bordered" style="width: auto;">
-        <tr>
-            <td></td>
-            <td><b>Hatches</b></td>
-            <td><b>Value</b></td>
-            <td><b>Cargo</b></td>
-            <td><b>Value</b></td>
-        </tr>
-        <tr>
-            <td><b>High</b></td>
-            <td><button type=button class="btn btn-info btn-large" onClick="addOne('high_hatches')">Hatches:</button></td>
-            <td><input type="text" value="0" readonly="readonly" style="width:5em" name="high_hatches" id="high_hatches"></td>
-            <td><button type=button class="btn btn-warning btn-large" onClick="addOne('high_cargo')">Cargo:</button></td>
-            <td><input type="text" value="0" readonly="readonly" style="width:5em" name="high_cargo" id="high_cargo"></td>
-        </tr>
-        <tr>
-            <td><b>Mid</b></td>
-            <td><button type=button class="btn btn-info btn-large" onClick="addOne('mid_hatches')">Hatches:</button></td>
-            <td><input type="text" value="0" readonly="readonly" style="width:5em" name="mid_hatches" id="mid_hatches"></td>
-            <td><button type=button class="btn btn-warning btn-large" onClick="addOne('mid_cargo')">Cargo:</button></td>
-            <td><input type="text" value="0" readonly="readonly" style="width:5em" name="mid_cargo" id="mid_cargo"></td>
-        </tr>
-        <tr>
-            <td><b>Low</b></td>
-            <td><button type=button class="btn btn-info btn-large" onClick="addOne('low_hatches')">Hatches:</button></td>
-            <td><input type="text" value="0" readonly="readonly" style="width:5em" name="low_hatches" id="low_hatches"></td>
-            <td><button type=button class="btn btn-warning btn-large" onClick="addOne('low_cargo')">Cargo:</button></td>
-            <td><input type="text" value="0" readonly="readonly" style="width:5em" name="low_cargo" id="low_cargo"></td>
-        </tr>
-    </table>
+        <h3>Tele Op</h3>
+        <label>Rocket Ship</label>
+        <table class="table table-condensed table-bordered" style="width: auto;">
+            <tr>
+                <td></td>
+                <td><b>Hatches</b></td>
+                <td><b>Value</b></td>
+                <td><b>Cargo</b></td>
+                <td><b>Value</b></td>
+            </tr>
+            <tr>
+                <td><b>High</b></td>
+                <td><button type=button class="btn btn-info btn-large" onClick="addOne('high_hatches')">Hatches:</button></td>
+                <td><input type="text" value="0" readonly="readonly" style="width:5em" name="high_hatches" id="high_hatches"></td>
+                <td><button type=button class="btn btn-warning btn-large" onClick="addOne('high_cargo')">Cargo:</button></td>
+                <td><input type="text" value="0" readonly="readonly" style="width:5em" name="high_cargo" id="high_cargo"></td>
+            </tr>
+            <tr>
+                <td><b>Mid</b></td>
+                <td><button type=button class="btn btn-info btn-large" onClick="addOne('mid_hatches')">Hatches:</button></td>
+                <td><input type="text" value="0" readonly="readonly" style="width:5em" name="mid_hatches" id="mid_hatches"></td>
+                <td><button type=button class="btn btn-warning btn-large" onClick="addOne('mid_cargo')">Cargo:</button></td>
+                <td><input type="text" value="0" readonly="readonly" style="width:5em" name="mid_cargo" id="mid_cargo"></td>
+            </tr>
+            <tr>
+                <td><b>Low</b></td>
+                <td><button type=button class="btn btn-info btn-large" onClick="addOne('low_hatches')">Hatches:</button></td>
+                <td><input type="text" value="0" readonly="readonly" style="width:5em" name="low_hatches" id="low_hatches"></td>
+                <td><button type=button class="btn btn-warning btn-large" onClick="addOne('low_cargo')">Cargo:</button></td>
+                <td><input type="text" value="0" readonly="readonly" style="width:5em" name="low_cargo" id="low_cargo"></td>
+            </tr>
+        </table>
 
-    <label>Cargo Ship</label>
-    <table class="table table-condensed table-bordered" style="width: auto;">
-        <tr>
-            <td><button type=button class="btn btn-info btn-large" onClick="addOne('cargoship_hatches')">Hatches:</button></td>
-            <td><input type=text value="0" readonly="readonly" style="width:5em" name="cargoship_hatches" id="cargoship_hatches"></td>
-        </tr>
-        <tr>
-            <td><button type=button class="btn btn-warning btn-large" onClick="addOne('cargoship_cargo')">Cargo:</button></td>
-            <td><input type=text value="0" readonly="readonly" style="width:5em" name="cargoship_cargo" id="cargoship_cargo"></td>
-        </tr>
-    </table>
+        <label>Cargo Ship</label>
+        <table class="table table-condensed table-bordered" style="width: auto;">
+            <tr>
+                <td><button type=button class="btn btn-info btn-large" onClick="addOne('cargoship_hatches')">Hatches:</button></td>
+                <td><input type=text value="0" readonly="readonly" style="width:5em" name="cargoship_hatches" id="cargoship_hatches"></td>
+            </tr>
+            <tr>
+                <td><button type=button class="btn btn-warning btn-large" onClick="addOne('cargoship_cargo')">Cargo:</button></td>
+                <td><input type=text value="0" readonly="readonly" style="width:5em" name="cargoship_cargo" id="cargoship_cargo"></td>
+            </tr>
+        </table>
 
-    <label>Dropped Pieces</label>
-    <table class="table table-condensed table-bordered" style="width: auto;">
-        <tr>
-            <td><button type=button class="btn btn-info btn-large" onClick="addOne('dropped_hatches')">Hatches:</button></td>
-            <td><input type=text value="0" readonly="readonly" style="width:5em" name="dropped_hatches" id="dropped_hatches"></td>
-        </tr>
-        <tr>
-            <td><button type=button class="btn btn-warning btn-large" onClick="addOne('dropped_cargo')">Cargo:</button></td>
-            <td><input type=text value="0" readonly="readonly" style="width:5em" name="dropped_cargo" id="dropped_cargo"></td>
-        </tr>
-    </table>
+        <label>Dropped Pieces</label>
+        <table class="table table-condensed table-bordered" style="width: auto;">
+            <tr>
+                <td><button type=button class="btn btn-info btn-large" onClick="addOne('dropped_hatches')">Hatches:</button></td>
+                <td><input type=text value="0" readonly="readonly" style="width:5em" name="dropped_hatches" id="dropped_hatches"></td>
+            </tr>
+            <tr>
+                <td><button type=button class="btn btn-warning btn-large" onClick="addOne('dropped_cargo')">Cargo:</button></td>
+                <td><input type=text value="0" readonly="readonly" style="width:5em" name="dropped_cargo" id="dropped_cargo"></td>
+            </tr>
+        </table>
 
-    <br>
+        <br>
 
-    <h3>Endgame</h3>
-    <label>Climb</label>
-    <select name="climb" required>
-        <option value="" selected disabled hidden>Where was bot at end of match?</option>
-        <option value="0">Nothing</option>
-        <option value="1">Level 1</option>
-        <option value="2">Level 2</option>
-        <option value="3">Level 3</option>
-    </select>
+        <h3>Endgame</h3>
+        <label>Climb</label>
+        <select name="climb" required>
+            <option value="" selected disabled hidden>Where was bot at end of match?</option>
+            <option value="0">Nothing</option>
+            <option value="1">Level 1</option>
+            <option value="2">Level 2</option>
+            <option value="3">Level 3</option>
+        </select>
 
-    <label>Result</label>
-    <select name="result" required>
-        <option value="" selected disabled hidden>W/L/T</option>
-        <option value="win">Win</option>
-        <option value="lose">Lose</option>
-        <option value="tie">Tie</option>
-    </select>
+        <label>Result</label>
+        <select name="result" required>
+            <option value="" selected disabled hidden>W/L/T</option>
+            <option value="win">Win</option>
+            <option value="lose">Lose</option>
+            <option value="tie">Tie</option>
+        </select>
 
-    <label>Score</label>
-    <input type="number" min=0 max=999 style="width:5em" name="own_score" placeholder="Own" required />
-    <input type="number" min=0 max=999 style="width:5em" name="opp_score" placeholder="Opp" required />
+        <label>Score</label>
+        <input type="number" min=0 max=999 style="width:5em" name="own_score" placeholder="Own" required />
+        <input type="number" min=0 max=999 style="width:5em" name="opp_score" placeholder="Opp" required />
 
-    <label>Ranking Points</label>
-    <select name="ranking_points" required>
-        <option value="" selected disabled hidden>Number of rank points alliance received</option>
-        <option value="0">0</option>
-        <option value="1">1</option>
-        <option value="2">2</option>
-        <option value="3">3</option>
-        <option value="4">4</option>
-    </select>
+        <label>Ranking Points</label>
+        <select name="ranking_points" required>
+            <option value="" selected disabled hidden>Number of rank points alliance received</option>
+            <option value="0">0</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+        </select>
 
-    <br>
+        <br>
 
-    <h3>Miscellaneous</h3>
-    <label>Has Lifts for Buddy Climb</label>
-    <select name="buddy_climb" required>
-        <option value="" selected disabled hidden>Lifts another bot to level 3</option>
-        <option value="yes">Yes</option>
-        <option value="no">No</option>
-        <option value="unsure">Unsure</option>
-    </select>
+        <h3>Miscellaneous</h3>
+        <label>Has Lifts for Buddy Climb</label>
+        <select name="buddy_climb" required>
+            <option value="" selected disabled hidden>Lifts another bot to level 3</option>
+            <option value="yes">Yes</option>
+            <option value="no">No</option>
+            <option value="unsure">Unsure</option>
+        </select>
 
-    <label>Just a Ramp Bot</label>
-    <select name="ramp_bot" required>
-        <option value="" selected disabled hidden>Ramps, but can't score?</option>
-        <option value="yes">Yes</option>
-        <option value="no">No</option>
-    </select>   
+        <label>Just a Ramp Bot</label>
+        <select name="ramp_bot" required>
+            <option value="" selected disabled hidden>Ramps, but can't score?</option>
+            <option value="yes">Yes</option>
+            <option value="no">No</option>
+        </select>   
 
-    <label>Has a Camera</label>
-    <select name="camera" required>
-        <option value="" selected disabled hidden>Select Option</option>
-        <option value="yes">Yes</option>
-        <option value="no">No</option>
-        <option value="unsure">Unsure</option>
-    </select>   
+        <label>Has a Camera</label>
+        <select name="camera" required>
+            <option value="" selected disabled hidden>Select Option</option>
+            <option value="yes">Yes</option>
+            <option value="no">No</option>
+            <option value="unsure">Unsure</option>
+        </select>   
 
-    <label>Hatch Ground Pickup</label>
-    <select name="hatch_ground_pickup" required>
-        <option value="" selected disabled hidden>Pickup hatch from floor?</option>
-        <option value="yes">Yes</option>
-        <option value="no">No</option>
-        <option value="unsure">Unsure</option>
-    </select>
+        <label>Hatch Ground Pickup</label>
+        <select name="hatch_ground_pickup" required>
+            <option value="" selected disabled hidden>Pickup hatch from floor?</option>
+            <option value="yes">Yes</option>
+            <option value="no">No</option>
+            <option value="unsure">Unsure</option>
+        </select>
 
-    <label>Cargo Ground Pickup</label>
-    <select name="cargo_ground_pickup" required>
-        <option value="" selected disabled hidden>Pickup cargo from floor?</option>
-        <option value="yes">Yes</option>
-        <option value="no">No</option>
-        <option value="unsure">Unsure</option>
-    </select>   
+        <label>Cargo Ground Pickup</label>
+        <select name="cargo_ground_pickup" required>
+            <option value="" selected disabled hidden>Pickup cargo from floor?</option>
+            <option value="yes">Yes</option>
+            <option value="no">No</option>
+            <option value="unsure">Unsure</option>
+        </select>   
 
-    <label>Hatch Human Intake</label>
-    <select name="hatch_human_intake" required>
-        <option value="" selected disabled hidden>Can pull hatch from loading station?</option>
-        <option value="yes">Yes</option>
-        <option value="no">No</option>
-        <option value="unsure">Unsure</option>
-    </select>
+        <label>Hatch Human Intake</label>
+        <select name="hatch_human_intake" required>
+            <option value="" selected disabled hidden>Can pull hatch from loading station?</option>
+            <option value="yes">Yes</option>
+            <option value="no">No</option>
+            <option value="unsure">Unsure</option>
+        </select>
 
-    <label>Cargo Human Intake</label>
-    <select name="cargo_human_intake" required>
-        <option value="" selected disabled hidden>Can take cargo directly from loading station?</option>
-        <option value="yes">Yes</option>
-        <option value="no">No</option>
-        <option value="unsure">Unsure</option>
-    </select>
+        <label>Cargo Human Intake</label>
+        <select name="cargo_human_intake" required>
+            <option value="" selected disabled hidden>Can take cargo directly from loading station?</option>
+            <option value="yes">Yes</option>
+            <option value="no">No</option>
+            <option value="unsure">Unsure</option>
+        </select>
 
-    <label>Driver Skill</label>
-    <select name="driver_skill" required>
-        <option value="" selected disabled hidden>Rate driving</option>
-        <option value="Amazing">Amazing</option>
-        <option value="Good">Good</option>
-        <option value="Fair">Fair</option>
-        <option value="Poor">Poor</option>
-    </select>   
+        <label>Driver Skill</label>
+        <select name="driver_skill" required>
+            <option value="" selected disabled hidden>Rate driving</option>
+            <option value="Amazing">Amazing</option>
+            <option value="Good">Good</option>
+            <option value="Fair">Fair</option>
+            <option value="Poor">Poor</option>
+        </select>   
 
-    <label>Played Defense</label>
-    <select name="played_defense" required>
-        <option value="" selected disabled hidden>Play any defense?</option>
-        <option value="yes">Yes</option>
-        <option value="no">No</option>
-    </select>
+        <label>Played Defense</label>
+        <select name="played_defense" required>
+            <option value="" selected disabled hidden>Play any defense?</option>
+            <option value="yes">Yes</option>
+            <option value="no">No</option>
+        </select>
 
-    <label>Notes</label>
-    <textarea name="notes" rows="4" placeholder="Write anything not covered in above questions."></textarea>
+        <label>Notes</label>
+        <textarea name="notes" rows="4" placeholder="Write anything not covered in above questions."></textarea>
 
-    <br><br>
-    <input type=hidden name="comp_id" value="<%= @competition.id %>">
+        <br><br>
+        <input type=hidden name="comp_id" value="<%= @competition.id %>">
 
-    <label><input type="submit" class="btn btn-success btn-large" value="Save Info"></label>
+        <label><input type="submit" class="btn btn-success btn-large" value="Save Info"></label>
     </form>
 
     <div id="undo_and_hist">
