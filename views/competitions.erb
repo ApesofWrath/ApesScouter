@@ -10,6 +10,7 @@
     <label>Go to:</label>
     <select id="goto" required>
         <option value="competitions">Competition Page</option>
+        <option value="teams">Team List</option>
         <option value="stats">Stats</option>
     </select>
 
@@ -29,6 +30,9 @@
         
         if(dest === "competitions") {
             link.setAttribute('href', "/competitions/" + compId);
+        }
+        else if(dest === "teams") {
+            link.setAttribute('href', "/competitions/" + compId + "/teams_list");
         }
         else if(dest === "stats") {
             link.setAttribute('href', "/competitions/" + compId + "/stats");

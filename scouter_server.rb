@@ -82,9 +82,9 @@ module ApesScouter
 
         # New Pit Scouting
         get '/competitions/:id/new_pit_scout' do
-            if Competition[params[:id]].name == "SFR"
-                halt(400, "I think you've taken a wrong turn...");
-            end
+            #if Competition[params[:id]].name == "SFR"
+            #    halt(400, "I think you've taken a wrong turn...");
+            #end
             erb :new_pit_scout
         end
 
@@ -124,9 +124,9 @@ module ApesScouter
         
         # Add new match entry
         get '/competitions/:id/new_match' do
-            if Competition[params[:id]].name == "SFR"
-                halt(400, "I think you've taken a wrong turn...");
-            end
+            #if Competition[params[:id]].name == "SFR"
+            #    halt(400, "I think you've taken a wrong turn...");
+            #end
             erb :new_match
         end
 
@@ -237,6 +237,9 @@ module ApesScouter
             erb :teams
         end
 
+        get '/competitions/:id/teams_list' do
+            erb :teams_list
+        end
 
         # Image Upload
         get '/upload' do
