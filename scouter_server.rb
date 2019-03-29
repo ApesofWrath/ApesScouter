@@ -231,6 +231,17 @@ module ApesScouter
 
             erb :team
         end
+
+        # Change Team Picture
+        post '/change_picture' do
+            @filename = params[:file][:filename]
+            file = params[:file][:tempfile]
+            File.open("./public/robots/#{params[:team_number]}_#{params[:comp_id]}", 'wb') do |f|
+                f.write(file.read)
+            end
+
+            redirect "/competitions/#{team_data.comp_id}/teams/#{team_data.team_number}"
+        end
         
         # Teams List
         get '/teams' do
@@ -239,22 +250,6 @@ module ApesScouter
 
         get '/competitions/:id/teams_list' do
             erb :teams_list
-        end
-
-        # Image Upload
-        get '/upload' do
-            erb :upload
-        end
-
-        post '/save_image' do
-            @filename = params[:file][:filename]
-            file = params[:file][:tempfile]
-
-            File.open("./public/robots/sfr_2019/#{@filename}", 'wb') do |f|
-                f.write(file.read)
-            end
-
-            erb :show_image
         end
     end
 end

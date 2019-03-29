@@ -36,6 +36,13 @@
         </div> 
 
         <img style="margin-bottom: 20px;" src="/robots/<%= @team.number %>_<%= @competition.id %>" alt="Picture of robot for team <%= @team.number %>" />
+
+        <form action="/change_picture" method="POST" id="myForm" enctype="multipart/form-data">
+            <label>Change Picture of Robot</label>
+            <input type="file" name="file" accept="image/*" required>
+            <input type=hidden name="comp_id" value="<%= @competition.id %>">
+            <label><input type="submit" class="btn btn-success btn-med" value="Change Picture"></label>
+        </form>
     <% end %>
 
     <!-- Show other competitions the team was at -->
