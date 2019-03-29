@@ -25,7 +25,7 @@ To run the server locally:
 1. Run `bundle install`. This will download and install the gems that Apes Scouter depends on.
 1. Run `bundle exec rake db:migrate`. This will run the database migrations to create the necessary tables in
 MySQL. **Please make sure your database has been created and that it is empty with no tables in it. Otherwise this command will fail**.
-1. Run `ruby parts_server_control.rb <command>` to control the running of the Apes Scouter server, where `<command>` can be one of `start|stop|run|restart`.
+1. Run `ruby scouter_server_control.rb <command>` to control the running of the Apes Scouter server, where `<command>` can be one of `start|stop|run|restart`.
 1. Go to `http://localhost:9000` in the browser.
 
 Due to the fact that this system was designed to be run locally, there is no authetication for the site. If you are planning on putting this out on the internet I highly recommend some sort of SSO mechanism.
