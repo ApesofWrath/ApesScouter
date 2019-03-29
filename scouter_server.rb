@@ -107,14 +107,18 @@ module ApesScouter
                 Team.create(:number => params[:team_number])
             end
 
+
+            halt(400, "Did you make a selection for cargo intake?") if params[:cargo_intake].nil?
+            halt(400, "Did you make a selection for hatch intake?") if params[:hatch_intake].nil?
+
             team_data = Pit_Scouting.create(:comp_id => params[:comp_id], :scouter_name => params[:scouter_name],
                                             :team_name => params[:team_name], :team_number => params[:team_number],
                                             :camera => params[:camera], :camera_use => params[:camera_use],
                                             :sand_strat => params[:sand_strat], :hab_start => params[:hab_start],
-                                            :climb => params[:climb], :strategy => params[:strategy],
                                             :cargo_intake => params[:cargo_intake].join(', '), :hatch_intake => params[:hatch_intake].join(', '),
+                                            :climb => params[:climb], :strategy => params[:strategy],
                                             :notes => params[:notes])
-
+           
             redirect "/competitions/#{team_data.comp_id}/teams/#{team_data.team_number}"
         end
         
