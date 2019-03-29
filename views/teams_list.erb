@@ -9,11 +9,9 @@
     
     <div class="well">
         <% Team.each do |team| %>
-                <% if DB.fetch("SELECT COUNT(*) FROM pit_scouting WHERE comp_id = ? AND team_number = ?;",
-                        @competition.id, team.number).first[:"COUNT(*)"].to_i > 0 ||
-                        DB.fetch("SELECT COUNT(*) FROM matches WHERE comp_id = ? AND team_number = ?;",
-                         @competition.id, team.number).first[:"COUNT(*)"].to_i > 0 %>
-                            <li><h4><a href="/competitions/<%= @competition.id %>/teams/<%= team.number %> "><%= team.number %></a></h4></li>
+            <% if Pit_Scouting.where([[:comp_id, @competition.id], [:team_number, team.number]]).all.length > 0 ||
+                    Match.where([[:comp_id, @competition.id], [:team_number, team.number]]).all.length > 0 %>
+                        <li><h4><a href="/competitions/<%= @competition.id %>/teams/<%= team.number %> "><%= team.number %></a></h4></li>
             <% end %>
         <% end %>
     </div>
