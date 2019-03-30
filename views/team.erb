@@ -41,6 +41,7 @@
             <label>Change Picture of Robot</label>
             <input type="file" name="file" accept="image/*" required>
             <input type=hidden name="comp_id" value="<%= @competition.id %>">
+            <input type=hidden name="team_number" value="<%= @team.number %>">
             <label><input type="submit" class="btn btn-success btn-med" value="Change Picture"></label>
         </form>
     <% end %>

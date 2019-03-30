@@ -240,7 +240,7 @@ module ApesScouter
                 f.write(file.read)
             end
 
-            redirect "/competitions/#{team_data.comp_id}/teams/#{team_data.team_number}"
+            redirect "/competitions/#{params[:comp_id]}/teams/#{params[:team_number]}"
         end
         
         # Teams List
