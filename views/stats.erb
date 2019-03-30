@@ -24,7 +24,7 @@
                     </tr>
                     </thead>
                     <tbody>
-                        <% DB[:matches].select(:team_number, :match_number, col.to_sym).order(Sequel.desc(col.to_sym)).limit(15).each do |row| %>
+                        <% DB[:matches].select(:team_number, :match_number, col.to_sym).order(Sequel.desc(col.to_sym)).limit(15).where(:comp_id => @competition.id).each do |row| %>
                             <tr>
                                 <th><a href="/competitions/<%= @competition.id %>/teams/<%= row[:team_number] %>"><%= row[:team_number] %></a></th>
                                 <td><%= row[:match_number] %></td>
@@ -48,8 +48,8 @@
                     </tr>
                     </thead>
                     <tbody>
-                        <% DB.fetch("SELECT * FROM (SELECT team_number, avg(?) AS ? FROM matches GROUP BY team_number) AS average_query ORDER BY ? DESC LIMIT 15;",
-                                    col.to_sym, ('avg_' + col.to_s).to_sym, ('avg_' + col.to_s).to_sym) do |row| %>
+                        <% DB.fetch("SELECT * FROM (SELECT team_number, avg(?) AS ? FROM matches WHERE comp_id = ? GROUP BY team_number) AS average_query ORDER BY ? DESC LIMIT 15;",
+                                    col.to_sym, ('avg_' + col.to_s).to_sym, @competition.id, ('avg_' + col.to_s).to_sym) do |row| %>
                             <tr>
                                 <th><a href="/competitions/<%= @competition.id %>/teams/<%= row[:team_number] %>"><%= row[:team_number] %></a></th>
                                 <td><%= row[('avg_' + col.to_s).to_sym].to_f %></td>
